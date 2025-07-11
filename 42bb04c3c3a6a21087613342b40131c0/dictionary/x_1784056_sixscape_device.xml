@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="f017b89fc3eee21087613342b401314f" label="Device" max_length="40" name="x_1784056_sixscape_device" type="collection">
+        <element label="Device ID" mandatory="true" max_length="100" name="device_id" type="string"/>
+        <element label="Device Status" max_length="100" name="device_status" type="string"/>
+        <element label="Certificate Name" max_length="1000" name="certificate_name" type="string"/>
+        <element label="Profile" max_length="32" name="profile" reference="x_1784056_sixscape_profile" type="reference"/>
+        <element label="Certificate Creation Time" max_length="100" name="certificate_creation_time" type="string"/>
+        <element label="Certificate Status" max_length="100" name="certificate_status" type="string"/>
+        <element label="Expiry Date" max_length="40" name="expiry_date" type="glide_date_time"/>
+        <element label="Device Name" mandatory="true" max_length="1000" name="device_name" type="string"/>
+        <element label="Device Owner ID" mandatory="true" max_length="100" name="device_owner_id" type="string"/>
+        <index name="index">
+            <element name="profile"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>populate_connection_configurations</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+    var connection_details = new GlideAjax("get_connection_details");
+    connection_details.addParam("sysparm_name", "getConnectionDetails");
+    connection_details.getXML(getResponse);
+
+    function getResponse(response) {
+        var res = response.responseXML.documentElement.getAttribute("answer");
+        try {
+            res = JSON.parse(res);
+        } catch (err) {
+            alert("Could not load the connection details");
+        }
+        g_form.setValue("end_point", res["end_point"]);
+        g_form.setValue("application_id", res["application_id"]);
+        g_form.setValue("application_secret", res["application_secret"]);
+        g_form.setValue("mid_server", res['mid_server']);
+    }
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-09 12:41:00</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>ba61540fc3a6a21087613342b4013171</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>populate_connection_configurations</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sys_script_client_ba61540fc3a6a21087613342b4013171</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-09 15:12:51</sys_updated_on>
+        <table>x_1784056_sixscape_connection_configurations</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

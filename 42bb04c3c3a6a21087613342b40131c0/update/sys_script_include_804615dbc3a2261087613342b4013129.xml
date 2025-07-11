@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1784056_sixscape.ScheduleForDeviceSync</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ScheduleForDeviceSync</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ScheduleForDeviceSync = Class.create();
+ScheduleForDeviceSync.prototype = {
+    // Cache token and expiry for bulk processing
+    _cachedToken: null,
+    _cachedExpiry: 0,
+
+    syncDevices: function() {
+        try {
+            var authToken = this._getValidAuthToken();
+            var existingDeviceIds = this._getExistingDeviceIds();
+            var profileGroupIds = this._getProfileGroupIds();
+            var endpoint = this._getCleanEndpoint();
+            var midServer = gs.getProperty("x_1784056_sixscape.Mid Server Name");
+
+            // Initialize reusable RESTMessageV2 object
+            var restMessage = this._createRestMessage(midServer);
+
+            // Process each profile group
+            profileGroupIds.forEach(function(groupId) {
+                gs.info("Processing profile group: " + groupId);
+                var profileSysId = this._getProfileSysIdByGroupId(groupId);
+                if (!profileSysId) {
+                    gs.warn("No profile found for group id: " + groupId);
+                    return;
+                }
+
+                // Refresh token before API call
+                authToken = this._getValidAuthToken();
+
+                // Fetch devices for this profile group with pagination
+                var deviceOwnerIds = this._fetchDevicesByOwner(restMessage, authToken, endpoint, groupId, profileSysId, existingDeviceIds);
+
+                // Refresh token before batch processing
+                authToken = this._getValidAuthToken();
+
+                restMessage = this._createRestMessage(midServer); // reset REST message for batch processing
+
+                this._processDevicesInBatches(restMessage, authToken, endpoint, deviceOwnerIds, profileSysId, existingDeviceIds);
+
+            }.bind(this));
+
+            this._deleteObsoleteDevices(existingDeviceIds);
+
+            gs.info("Device sync completed.");
+
+            // Refresh token before updating certificates
+            authToken = this._getValidAuthToken();
+
+            this._updateCertificatesForDevices(authToken, endpoint);
+
+        } catch (ex) {
+            gs.error("Error in ScheduleForDeviceSync.syncDevices: " + ex.message);
+            throw ex;
+        }
+    },
+
+    /**
+     * Returns a valid Bearer token, caching and refreshing it if expired.
+     */
+    _getValidAuthToken: function() {
+        var now = Math.floor(new Date().getTime() / 1000);
+
+        if (this._cachedToken && this._cachedExpiry > now + 60) { // 60 seconds buffer
+            return this._cachedToken;
+        }
+
+        var tokenObj = new get_token();
+        var response = tokenObj.TestConnection();
+
+        if (!response || response.length < 2) {
+            throw new Error('Invalid response from Token API.');
+        }
+
+        var status = response[0];
+        var responseBody = response[1];
+
+        if (status !== 200) {
+            throw new Error('Token API returned status: ' + status);
+        }
+
+        var parsed = JSON.parse(responseBody);
+        var rawToken = parsed.authToken;
+        if (!rawToken) {
+            throw new Error('Token response missing authToken');
+        }
+
+        this._cachedToken = 'Bearer ' + rawToken;
+        this._cachedExpiry = this._getExpiryFromJwt(rawToken);
+
+        if (!this._cachedExpiry) {
+            throw new Error('Failed to parse expiry from token');
+        }
+
+        return this._cachedToken;
+    },
+
+    /**
+     * Extracts expiry (exp) from JWT token string.
+     */
+    _getExpiryFromJwt: function(token) {
+        var parts = token.split('.');
+        if (parts.length !== 3) return null;
+        var payloadBase64 = parts[1];
+        var payloadJson = this._base64UrlDecode(payloadBase64);
+        if (!payloadJson) return null;
+        try {
+            var payload = JSON.parse(payloadJson);
+            return payload.exp || null;
+        } catch (e) {
+            return null;
+        }
+    },
+
+    /**
+     * Base64 URL decode helper using gs.base64Decode() for scoped apps.
+     */
+    _base64UrlDecode: function(str) {
+        str = str.replace(/-/g, '+').replace(/_/g, '/');
+        while (str.length % 4) {
+            str += '=';
+        }
+        try {
+            return gs.base64Decode(str);
+        } catch (e) {
+            gs.error('Base64 decode error: ' + e.message);
+            return null;
+        }
+    },
+
+    /**
+     * Retrieves all existing device IDs from local table.
+     */
+    _getExistingDeviceIds: function() {
+        var deviceIds = [];
+        var gr = new GlideRecordSecure('x_1784056_sixscape_device');
+        gr.query();
+        while (gr.next()) {
+            deviceIds.push(gr.getValue('device_id'));
+        }
+        return deviceIds;
+    },
+
+    /**
+     * Retrieves all profile group IDs from local profile table.
+     */
+    _getProfileGroupIds: function() {
+        var groupIds = [];
+        var gr = new GlideRecordSecure('x_1784056_sixscape_profile');
+        gr.query();
+        while (gr.next()) {
+            var groupId = gr.getValue('profile_group_id');
+            if (groupId) {
+                groupIds.push(groupId);
+            }
+        }
+        return groupIds;
+    },
+
+    /**
+     * Returns cleaned endpoint URL without trailing slash.
+     */
+    _getCleanEndpoint: function() {
+        var endpoint = gs.getProperty("x_1784056_sixscape.End Point") || "";
+        if (endpoint.endsWith("/")) {
+            endpoint = endpoint.slice(0, -1);
+        }
+        return endpoint;
+    },
+
+    /**
+     * Creates and configures RESTMessageV2 object with MID Server if set.
+     */
+    _createRestMessage: function(midServer) {
+        var r = new sn_ws.RESTMessageV2();
+        if (midServer && midServer.trim() !== '') {
+            r.setMIDServer(midServer);
+            r.setEccParameter('skip_sensor', 'true');
+        }
+        return r;
+    },
+
+    /**
+     * Retrieves profile sys_id by profile_group_id.
+     */
+    _getProfileSysIdByGroupId: function(groupId) {
+        var gr = new GlideRecordSecure('x_1784056_sixscape_profile');
+        gr.addQuery('profile_group_id', groupId);
+        gr.query();
+        if (gr.next()) {
+            return gr.getValue('sys_id');
+        }
+        return null;
+    },
+
+    /**
+     * Fetch devices owned by profile group with pagination, update/insert locally.
+     * Returns list of deviceOwnerIds found.
+     */
+    _fetchDevicesByOwner: function(restMessage, authToken, endpoint, groupId, profileSysId, existingDeviceIds) {
+        var deviceOwnerIds = [];
+        var skip = 0, top = 1;
+
+        while (true) {
+			authToken = this._getValidAuthToken();
+            restMessage.setHttpMethod("get");
+            restMessage.setRequestHeader("Authorization", authToken);
+            restMessage.setRequestHeader('User-Agent', 'snow');
+            restMessage.setRequestHeader("Content-Type", "application/json");
+            restMessage.setEndpoint(endpoint + "/v1/device");
+            restMessage.setQueryParameter("deviceOwnerId", "eq " + groupId);
+            restMessage.setQueryParameter("$skip", skip);
+            restMessage.setQueryParameter("$top", top);
+            restMessage.setHttpTimeout(30000);
+
+            var response = restMessage.execute();
+            if (response.haveError()) {
+                this._handleRestError(response);
+            }
+
+            var body = JSON.parse(response.getBody());
+            body.forEach(function(device) {
+                deviceOwnerIds.push(device.deviceId);
+                this._upsertDevice(device, profileSysId, existingDeviceIds);
+            }.bind(this));
+
+            if (body.length !== top) {
+                break;
+            }
+            skip += top;
+        }
+        return deviceOwnerIds;
+    },
+
+    /**
+     * Upsert device in local table.
+     */
+    _upsertDevice: function(device, profileSysId, existingDeviceIds) {
+        var gr = new GlideRecordSecure('x_1784056_sixscape_device');
+        gr.addQuery('device_id', device.deviceId);
+        gr.query();
+
+        if (gr.hasNext()) {
+            while (gr.next()) {
+                gr.device_name = device.deviceName;
+                gr.device_id = device.deviceId;
+                gr.device_owner_id = device.deviceOwnerId;
+                gr.device_status = device.status;
+                gr.profile = profileSysId;
+                gr.update();
+            }
+            var index = existingDeviceIds.indexOf(device.deviceId);
+            if (index > -1) {
+                existingDeviceIds.splice(index, 1);
+            }
+        } else {
+            gr.initialize();
+            gr.device_name = device.deviceName;
+            gr.device_id = device.deviceId;
+            gr.device_owner_id = device.deviceOwnerId;
+            gr.device_status = device.status;
+            gr.profile = profileSysId;
+            gr.insert();
+        }
+    },
+
+    /**
+     * Processes devices in batches of 100 with $subfilter queries.
+     */
+    _processDevicesInBatches: function(restMessage, authToken, endpoint, deviceOwnerIds, profileSysId, existingDeviceIds) {
+        var batchSize = 100;
+
+        for (var start = 0; start < deviceOwnerIds.length; start += batchSize) {
+            var currentBatch = deviceOwnerIds.slice(start, start + batchSize);
+            var skip = 0, top = 1;
+
+            while (true) {
+				authToken = this._getValidAuthToken();
+                var conditions = currentBatch.map(function(id) {
+                    return "deviceOwnerId=eq " + id;
+                });
+                var filterString = "(" + conditions.join(" $or ") + ")";
+
+                restMessage.setHttpMethod("get");
+                restMessage.setRequestHeader("Authorization", authToken);
+                restMessage.setRequestHeader('User-Agent', 'snow');
+                restMessage.setRequestHeader("Content-Type", "application/json");
+                restMessage.setEndpoint(endpoint + "/v1/device");
+                restMessage.setQueryParameter("$subfilter", filterString);
+                restMessage.setQueryParameter("$skip", skip);
+                restMessage.setQueryParameter("$top", top);
+                restMessage.setHttpTimeout(30000);
+
+                var response = restMessage.execute();
+                if (response.haveError()) {
+                    this._handleRestError(response);
+                }
+
+                var body = JSON.parse(response.getBody());
+                body.forEach(function(device) {
+                    this._upsertDevice(device, profileSysId, existingDeviceIds);
+                }.bind(this));
+
+                if (body.length !== top) {
+                    break;
+                }
+                skip += top;
+            }
+        }
+    },
+
+    /**
+     * Deletes devices that no longer exist externally.
+     */
+    _deleteObsoleteDevices: function(existingDeviceIds) {
+        existingDeviceIds.forEach(function(deviceId) {
+            var gr = new GlideRecordSecure('x_1784056_sixscape_device');
+            gr.addQuery('device_id', deviceId);
+            gr.query();
+            while (gr.next()) {
+                gr.deleteRecord();
+                gs.info("Deleted obsolete device: " + deviceId);
+            }
+        });
+    },
+
+    /**
+     * Updates certificates for all devices.
+     */
+    _updateCertificatesForDevices: function(authToken, endpoint) {
+        var gr = new GlideRecordSecure('x_1784056_sixscape_device');
+        gr.query();
+        var midServer = gs.getProperty("x_1784056_sixscape.Mid Server Name");
+        var restMessage = this._createRestMessage(midServer);
+
+        while (gr.next()) {
+			authToken = this._getValidAuthToken();
+            var deviceId = gr.getValue("device_id");
+            var deviceOwnerId = gr.getValue("device_owner_id");
+            var subfilter = "(name=eq " + deviceId + " $or owner=eq " + deviceId + " $or owner=eq " + deviceOwnerId + ")";
+
+            restMessage.setHttpMethod("get");
+            restMessage.setRequestHeader("Authorization", authToken);
+            restMessage.setRequestHeader('User-Agent', 'snow');
+            restMessage.setRequestHeader("Content-Type", "application/json");
+            restMessage.setEndpoint(endpoint + "/v1/certificate");
+            restMessage.setQueryParameter("$subfilter", subfilter);
+            restMessage.setQueryParameter("$sort", "expiryDate desc");
+            restMessage.setHttpTimeout(30000);
+
+            var response = restMessage.execute();
+            if (response.haveError()) {
+                var responseBody = response.getBody();
+                gs.error(responseBody);
+                try {
+                    var res = JSON.parse(responseBody);
+                    gs.error(res.title);
+                } catch (err) {
+                    gs.error(responseBody);
+                }
+                continue;
+            }
+
+            var body = JSON.parse(response.getBody());
+            if (body.length > 0) {
+                var expiryDateGDT = new GlideDateTime(body[0].expiryDate);
+                gr.certificate_name = body[0].name;
+                gr.certificate_status = body[0].status;
+                gr.certificate_creation_time = body[0].createdDate;
+                gr.expiry_date = expiryDateGDT;
+                gr.update();
+            }
+        }
+    },
+
+    /**
+     * Handles REST API errors by throwing descriptive errors.
+     */
+    _handleRestError: function(response) {
+        var responseBody = response.getBody();
+        var message = 'Unknown REST API error';
+        try {
+            gs.error("REST API ERROR RESPONSE: " + responseBody);
+            var res = JSON.parse(responseBody);
+            message = res.title || message;
+        } catch (e) {
+            message = responseBody;
+        }
+        throw new Error(message);
+    },
+
+    type: 'ScheduleForDeviceSync'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-10 12:05:10</sys_created_on>
+        <sys_id>804615dbc3a2261087613342b4013129</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>ScheduleForDeviceSync</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sys_script_include_804615dbc3a2261087613342b4013129</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-10 14:32:59</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="ce1908dbc3eae21087613342b4013136" label="Profile" max_length="40" name="x_1784056_sixscape_profile" type="collection">
+        <element label="Profile ID" mandatory="true" max_length="40" name="profile_id" type="integer"/>
+        <element label="Validity" mandatory="true" max_length="40" name="validity" type="integer"/>
+        <element label="Key Algorithm" mandatory="true" max_length="100" name="key_algorithm" type="string"/>
+        <element label="Cert Type" mandatory="true" max_length="100" name="cert_type" type="string"/>
+        <element default="No" label="Approval Enabled" max_length="40" name="approval_enabled" type="radio"/>
+        <element label="Assignment Group" max_length="32" name="assignment_group" reference="sys_user_group" type="reference"/>
+        <element label="Profile Group ID" max_length="100" name="profile_group_id" type="string"/>
+        <element label="Hash Algorithm" mandatory="true" max_length="100" name="hash_algorithm" type="string"/>
+        <element label="Profile Status" mandatory="true" max_length="100" name="profile_status" type="string"/>
+        <element label="Product Code" mandatory="true" max_length="100" name="product_code" type="string"/>
+        <element label="Renewal Threshold" mandatory="true" max_length="40" name="renewal_threshold" type="integer"/>
+        <element display="true" label="Profile Name" mandatory="true" max_length="100" name="profile_name" type="string"/>
+        <index name="index">
+            <element name="assignment_group"/>
+        </index>
+    </element>
+</database>

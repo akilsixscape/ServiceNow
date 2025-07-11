@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="d12cc007c3a6a21087613342b40131ae" label="Request Items" max_length="40" name="x_1784056_sixscape_request_items" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Request Number" max_length="40" name="request_number" type="string"/>
+    </element>
+</database>

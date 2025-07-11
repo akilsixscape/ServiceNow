@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="527e48c7c3a6a21087613342b401318c" label="Connection Configurations" max_length="40" name="x_1784056_sixscape_connection_configurations" type="collection">
+        <element hint="IDcentral API Service Endpoint" label="End Point" mandatory="true" max_length="100" name="end_point" type="string"/>
+        <element display="true" label="Application ID" mandatory="true" max_length="100" name="application_id" type="string"/>
+        <element label="Application Secret" mandatory="true" max_length="255" name="application_secret" type="password2"/>
+        <element label="Status" max_length="100" name="status" read_only="true" type="string"/>
+        <element label="MID Server" max_length="100" name="mid_server" type="string"/>
+    </element>
+</database>

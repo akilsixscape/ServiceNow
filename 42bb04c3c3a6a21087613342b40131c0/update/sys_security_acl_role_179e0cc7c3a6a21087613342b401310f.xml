@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-09 12:12:35</sys_created_on>
+        <sys_id>179e0cc7c3a6a21087613342b401310f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1784056_sixscape_connection_configurations.x_1784056_sixscape.connection_configurations_user</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_security_acl display_value="x_1784056_sixscape_connection_configurations">579e0cc7c3a6a21087613342b401310b</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_179e0cc7c3a6a21087613342b401310f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-09 12:12:35</sys_updated_on>
+        <sys_user_role display_value="x_1784056_sixscape.connection_configurations_user" name="x_1784056_sixscape.connection_configurations_user">879ec8c7c3a6a21087613342b40131dd</sys_user_role>
+    </sys_security_acl_role>
+</record_update>
