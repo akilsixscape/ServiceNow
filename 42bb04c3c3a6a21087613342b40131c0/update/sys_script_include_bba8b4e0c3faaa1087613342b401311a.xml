@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1784056_sixscape.GetDeviceCertificateDetails</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>GetDeviceCertificateDetails</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var GetDeviceCertificateDetails = Class.create();
+GetDeviceCertificateDetails.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	getDeviceCertificateDetails: function () {
+		var result = {};
+		try {
+			var deviceSysId = this.getParameter("sysparm_deviceSysId");
+			if (!deviceSysId) return this._error("Device Sys ID is required.");
+
+			var device = this._getDeviceRecord(deviceSysId);
+			if (!device) return this._error("Device not found.");
+
+			var authToken = this._getAuthToken();
+			if (!authToken) return this._error("Authentication failed.");
+
+			// Prepare REST Call
+			var r = this._initRestMessage("/v1/certificate", authToken);
+			var subfilter = "(name=eq " + device.deviceId + " $or owner=eq " + device.deviceId + " $or owner=eq " + device.deviceOwnerId + ")";
+			r.setQueryParameter("$subfilter", subfilter);
+			r.setQueryParameter("$sort", "expiryDate desc");
+
+			var certResponse = r.execute();
+			if (certResponse.haveError()) return this._handleRestError(certResponse);
+
+			var certs = JSON.parse(certResponse.getBody());
+			if (!certs || certs.length === 0) return this._error("No certificate found.");
+
+			return JSON.stringify(certs[0]);
+
+		} catch (e) {
+			return this._error(e.message || e);
+		}
+	},
+
+	getDeviceDetails: function () {
+		var result = {};
+		try {
+			var deviceSysId = this.getParameter("sysparm_deviceSysId");
+			var bindAddress = this.getParameter("sysparm_bindAddress");
+			var bindPort = this.getParameter("sysparm_bindPort");
+
+			if (!deviceSysId) return this._error("Device Sys ID is required.");
+
+			var device = this._getDeviceRecord(deviceSysId);
+			if (!device) return this._error("Device not found.");
+
+			// Special case: only call REST API if 'Add New Device'
+			if (device.deviceName != "Add New Device") {
+				return JSON.stringify([]);
+			}
+
+			var authToken = this._getAuthToken();
+			if (!authToken) return this._error("Authentication failed.");
+
+			var r = this._initRestMessage("/v1/device", authToken);
+			r.setQueryParameter("attributeName", "eq Serial Number");
+			r.setQueryParameter("attributeValue", "eq " + bindAddress + ":" + bindPort);
+
+			var deviceResponse = r.execute();
+			if (deviceResponse.haveError()) return this._handleRestError(deviceResponse);
+
+			var body = JSON.parse(deviceResponse.getBody());
+			return JSON.stringify(body);
+
+		} catch (e) {
+			return this._error(e.message || e);
+		}
+	},
+
+	/**
+	 * Utility: Fetch a device GlideRecord and return object
+	 */
+	_getDeviceRecord: function (sysId) {
+		var gr = new GlideRecordSecure('x_1784056_sixscape_device');
+		if (!gr.get(sysId)) return null;
+
+		return {
+			deviceName: gr.getValue("device_name"),
+			deviceId: gr.getValue("device_id"),
+			deviceOwnerId: gr.getValue("device_owner_id")
+		};
+	},
+
+	_getAuthToken: function () {
+		var tokenObj = new GetToken();
+		var response = tokenObj.TestConnection();
+
+		if (!response || response.length < 2 || response[0] !== 200) return null;
+
+		try {
+			var parsed = JSON.parse(response[1]);
+			return "Bearer " + parsed.authToken;
+		} catch (e) {
+			return null;
+		}
+	},
+
+	_initRestMessage: function (path, authToken) {
+		var endpoint = gs.getProperty("x_1784056_sixscape.End Point") || "";
+		if (endpoint.endsWith("/")) endpoint = endpoint.slice(0, -1);
+
+		var r = new sn_ws.RESTMessageV2();
+		var mid = gs.getProperty("x_1784056_sixscape.Mid Server Name");
+		if (mid) {
+			r.setMIDServer(mid);
+			r.setEccParameter('skip_sensor', 'true');
+		}
+
+		r.setEndpoint(endpoint + path);
+		r.setHttpMethod("get");
+		r.setRequestHeader("Authorization", authToken);
+		r.setRequestHeader("User-Agent", "snow");
+		r.setRequestHeader("Content-Type", "application/json");
+		r.setHttpTimeout(30000);
+
+		return r;
+	},
+
+	_handleRestError: function (resp) {
+		var result = {};
+		try {
+			var body = JSON.parse(resp.getBody());
+			result.error = body.title || resp.getBody();
+		} catch (e) {
+			result.error = resp.getBody();
+		}
+		return JSON.stringify(result);
+	},
+
+	_error: function (msg) {
+		return JSON.stringify({ error: msg });
+	},
+
+	type: 'GetDeviceCertificateDetails'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 07:08:10</sys_created_on>
+        <sys_id>bba8b4e0c3faaa1087613342b401311a</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>GetDeviceCertificateDetails</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sys_script_include_bba8b4e0c3faaa1087613342b401311a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-15 14:03:32</sys_updated_on>
+    </sys_script_include>
+</record_update>

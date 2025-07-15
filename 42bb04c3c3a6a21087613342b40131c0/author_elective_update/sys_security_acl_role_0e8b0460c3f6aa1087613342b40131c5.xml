@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 03:50:00</sys_created_on>
+        <sys_id>0e8b0460c3f6aa1087613342b40131c5</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_1784056_sixscape_request.x_1784056_sixscape.admin</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_security_acl display_value="x_1784056_sixscape_request">8e8b0460c3f6aa1087613342b40131c1</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_0e8b0460c3f6aa1087613342b40131c5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 03:50:42</sys_updated_on>
+        <sys_user_role display_value="x_1784056_sixscape.admin" name="x_1784056_sixscape.admin">11cbc8c3c3a6a21087613342b401310e</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</application>
+        <file_path/>
+        <instance_id>fe2d67893b682258c55a348aa4e45ad2</instance_id>
+        <instance_name>dev311068</instance_name>
+        <name>sys_security_acl_role_0e8b0460c3f6aa1087613342b40131c5</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-07-14 03:50:00</sys_created_on><sys_id>0e8b0460c3f6aa1087613342b40131c5</sys_id><sys_mod_count>1</sys_mod_count><sys_name>x_1784056_sixscape_request.x_1784056_sixscape.admin</sys_name><sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package><sys_policy/><sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope><sys_security_acl display_value="x_1784056_sixscape_request">8e8b0460c3f6aa1087613342b40131c1</sys_security_acl><sys_update_name>sys_security_acl_role_0e8b0460c3f6aa1087613342b40131c5</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-07-14 03:50:42</sys_updated_on><sys_user_role display_value="x_1784056_sixscape.admin" name="x_1784056_sixscape.admin">11cbc8c3c3a6a21087613342b401310e</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>1182502108</payload_hash>
+        <record_name>x_1784056_sixscape_request.x_1784056_sixscape.admin</record_name>
+        <reverted_from/>
+        <source>16d43023c366661087613342b40131e8</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 03:50:42</sys_created_on>
+        <sys_id>90bb8860c3f6aa1087613342b4013112</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>198070e6bc00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 03:50:42</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>18bb886094f6aa10fd5ebb33bbae0c11</update_guid>
+        <update_guid_history>18bb886094f6aa10fd5ebb33bbae0c11:1182502108,c28b04604bf6aa102b9ab1c6c906cdc8:360908368</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_1784056_sixscape_request.x_1784056_sixscape.admin">83661460c33aaa1087613342b401310c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:37:35</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>0e275ff683fb42cf8942f6eb75ab1a31</sys_id>
+        <sys_metadata>0e8b0460c3f6aa1087613342b40131c5</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1784056_sixscape_request.x_1784056_sixscape.admin</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_parent display_value="">8e8b0460c3f6aa1087613342b40131c1</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_scope_delete display_value="">8cebff2c68a94643aaea493b7b5020f9</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_0e8b0460c3f6aa1087613342b40131c5</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_0e8b0460c3f6aa1087613342b40131c5">90bb8860c3f6aa1087613342b4013112</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:37:35</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

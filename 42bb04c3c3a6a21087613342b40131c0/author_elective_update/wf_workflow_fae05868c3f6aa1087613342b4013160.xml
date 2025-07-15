@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="wf_workflow_version">
+    <wf_workflow_version action="DELETE">
+        <active>true</active>
+        <activity_stages>{}</activity_stages>
+        <after_business_rules>false</after_business_rules>
+        <checked_out/>
+        <checked_out_by/>
+        <column_renderer display_value="Workflow-driven">a56213111b030100adca1e094f0713ac</column_renderer>
+        <condition/>
+        <condition_type>run_match</condition_type>
+        <description/>
+        <expected_sequences/>
+        <expected_time>1970-01-01 14:00:00</expected_time>
+        <expected_time_type/>
+        <full_sequences/>
+        <journal/>
+        <max_activity_count>100</max_activity_count>
+        <name>IDcentral Request Certificate</name>
+        <not_cacheable>false</not_cacheable>
+        <on_cancel><![CDATA[// This script executes if the workflow is cancelled.// The global variable context_sys_id contains the sys_id of the cancelled workflow context.]]></on_cancel>
+        <order>100</order>
+        <pin_type>set_by_activity</pin_type>
+        <published>true</published>
+        <relative_duration/>
+        <requires_ert>true</requires_ert>
+        <run_multiple>false</run_multiple>
+        <schedule/>
+        <stage_field/>
+        <stage_order>computed</stage_order>
+        <start display_value="Begin">72e05868c3f6aa1087613342b4013162</start>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_id>3cc05868c3f6aa1087613342b40131d5</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:40</sys_updated_on>
+        <table>x_1784056_sixscape_request</table>
+        <timezone/>
+        <validated>false</validated>
+        <workflow display_value="IDcentral Request Certificate">fae05868c3f6aa1087613342b4013160</workflow>
+    </wf_workflow_version>
+    <wf_workflow action="DELETE">
+        <access>public</access>
+        <description/>
+        <name>IDcentral Request Certificate</name>
+        <preview/>
+        <sys_class_name>wf_workflow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>fae05868c3f6aa1087613342b4013160</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>IDcentral Request Certificate</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>wf_workflow_fae05868c3f6aa1087613342b4013160</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:32</sys_updated_on>
+        <table>x_1784056_sixscape_request</table>
+        <template>false</template>
+        <vars/>
+    </wf_workflow>
+    <wf_activity action="DELETE">
+        <activity_definition display_value="Begin">c7a5e32c0a0a0b3a002377c24ed8ea76</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>1</databus_lookup_id>
+        <height/>
+        <input/>
+        <is_parent>false</is_parent>
+        <name>Begin</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_id>72e05868c3f6aa1087613342b4013162</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:32</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width>80</width>
+        <workflow_version display_value="IDcentral Request Certificate">3cc05868c3f6aa1087613342b40131d5</workflow_version>
+        <x>20</x>
+        <y>20</y>
+    </wf_activity>
+    <sys_variable_value action="DELETE" query="document_key=72e05868c3f6aa1087613342b4013162"/>
+    <wf_condition action="DELETE">
+        <activity display_value="Begin">72e05868c3f6aa1087613342b4013162</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_id>32e05868c3f6aa1087613342b4013163</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:32</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="DELETE">
+        <activity_definition display_value="End">c7a66f7d0a0a0b3a004544a6d2f14076</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>2</databus_lookup_id>
+        <height/>
+        <input/>
+        <is_parent>false</is_parent>
+        <name>End</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_id>fae05868c3f6aa1087613342b4013163</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:32</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width>80</width>
+        <workflow_version display_value="IDcentral Request Certificate">3cc05868c3f6aa1087613342b40131d5</workflow_version>
+        <x>400</x>
+        <y>150</y>
+    </wf_activity>
+    <sys_variable_value action="DELETE" query="document_key=fae05868c3f6aa1087613342b4013163"/>
+    <wf_transition action="DELETE">
+        <condition display_value="Always">32e05868c3f6aa1087613342b4013163</condition>
+        <from display_value="Begin">72e05868c3f6aa1087613342b4013162</from>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_id>3ae05c68c3f6aa1087613342b4013115</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:32</sys_updated_on>
+        <to display_value="End">fae05868c3f6aa1087613342b4013163</to>
+    </wf_transition>
+    <wf_estimated_runtime_config action="DELETE">
+        <estimated_run_time/>
+        <no_of_data_points>1</no_of_data_points>
+        <percentage_threshold_ert>20</percentage_threshold_ert>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:32</sys_created_on>
+        <sys_id>36e05868c3f6aa1087613342b4013160</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:32</sys_updated_on>
+        <workflow_version display_value="IDcentral Request Certificate">3cc05868c3f6aa1087613342b40131d5</workflow_version>
+    </wf_estimated_runtime_config>
+    <wf_workflow_version action="DELETE" query="workflow=fae05868c3f6aa1087613342b4013160^sys_id!=3cc05868c3f6aa1087613342b40131d5">
+        <published>false</published>
+    </wf_workflow_version>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</application>
+        <file_path/>
+        <instance_id>fe2d67893b682258c55a348aa4e45ad2</instance_id>
+        <instance_name>dev311068</instance_name>
+        <name>wf_workflow_fae05868c3f6aa1087613342b4013160</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="wf_workflow_version"&gt;&lt;wf_workflow_version action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;activity_stages&gt;{}&lt;/activity_stages&gt;&lt;after_business_rules&gt;false&lt;/after_business_rules&gt;&lt;checked_out/&gt;&lt;checked_out_by/&gt;&lt;column_renderer display_value="Workflow-driven"&gt;a56213111b030100adca1e094f0713ac&lt;/column_renderer&gt;&lt;condition/&gt;&lt;condition_type&gt;run_match&lt;/condition_type&gt;&lt;description/&gt;&lt;expected_sequences/&gt;&lt;expected_time&gt;1970-01-01 14:00:00&lt;/expected_time&gt;&lt;expected_time_type/&gt;&lt;full_sequences/&gt;&lt;journal/&gt;&lt;max_activity_count&gt;100&lt;/max_activity_count&gt;&lt;name&gt;IDcentral Request Certificate&lt;/name&gt;&lt;not_cacheable&gt;false&lt;/not_cacheable&gt;&lt;on_cancel&gt;&lt;![CDATA[// This script executes if the workflow is cancelled.// The global variable context_sys_id contains the sys_id of the cancelled workflow context.]]&gt;&lt;/on_cancel&gt;&lt;order&gt;100&lt;/order&gt;&lt;pin_type&gt;set_by_activity&lt;/pin_type&gt;&lt;published&gt;true&lt;/published&gt;&lt;relative_duration/&gt;&lt;requires_ert&gt;true&lt;/requires_ert&gt;&lt;run_multiple&gt;false&lt;/run_multiple&gt;&lt;schedule/&gt;&lt;stage_field/&gt;&lt;stage_order&gt;computed&lt;/stage_order&gt;&lt;start display_value="Begin"&gt;72e05868c3f6aa1087613342b4013162&lt;/start&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_id&gt;3cc05868c3f6aa1087613342b40131d5&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:40&lt;/sys_updated_on&gt;&lt;table&gt;x_1784056_sixscape_request&lt;/table&gt;&lt;timezone/&gt;&lt;validated&gt;false&lt;/validated&gt;&lt;workflow display_value="IDcentral Request Certificate"&gt;fae05868c3f6aa1087613342b4013160&lt;/workflow&gt;&lt;/wf_workflow_version&gt;&lt;wf_workflow action="INSERT_OR_UPDATE"&gt;&lt;access&gt;public&lt;/access&gt;&lt;description/&gt;&lt;name&gt;IDcentral Request Certificate&lt;/name&gt;&lt;preview/&gt;&lt;sys_class_name&gt;wf_workflow&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;fae05868c3f6aa1087613342b4013160&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;IDcentral Request Certificate&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape"&gt;42bb04c3c3a6a21087613342b40131c0&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Sixscape IDcentral"&gt;42bb04c3c3a6a21087613342b40131c0&lt;/sys_scope&gt;&lt;sys_update_name&gt;wf_workflow_fae05868c3f6aa1087613342b4013160&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:32&lt;/sys_updated_on&gt;&lt;table&gt;x_1784056_sixscape_request&lt;/table&gt;&lt;template&gt;false&lt;/template&gt;&lt;vars/&gt;&lt;/wf_workflow&gt;&lt;wf_activity action="INSERT_OR_UPDATE"&gt;&lt;activity_definition display_value="Begin"&gt;c7a5e32c0a0a0b3a002377c24ed8ea76&lt;/activity_definition&gt;&lt;activity_definition_updated&gt;false&lt;/activity_definition_updated&gt;&lt;databus_lookup_id&gt;1&lt;/databus_lookup_id&gt;&lt;height/&gt;&lt;input/&gt;&lt;is_parent&gt;false&lt;/is_parent&gt;&lt;name&gt;Begin&lt;/name&gt;&lt;new_activity_definition/&gt;&lt;notes/&gt;&lt;out_of_date&gt;false&lt;/out_of_date&gt;&lt;parent/&gt;&lt;pinned&gt;false&lt;/pinned&gt;&lt;pinned_version/&gt;&lt;stage/&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_id&gt;72e05868c3f6aa1087613342b4013162&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:32&lt;/sys_updated_on&gt;&lt;timeout&gt;1970-01-01 00:00:00&lt;/timeout&gt;&lt;vars/&gt;&lt;width&gt;80&lt;/width&gt;&lt;workflow_version display_value="IDcentral Request Certificate"&gt;3cc05868c3f6aa1087613342b40131d5&lt;/workflow_version&gt;&lt;x&gt;20&lt;/x&gt;&lt;y&gt;20&lt;/y&gt;&lt;/wf_activity&gt;&lt;sys_variable_value action="delete_multiple" query="document_key=72e05868c3f6aa1087613342b4013162"/&gt;&lt;wf_condition action="INSERT_OR_UPDATE"&gt;&lt;activity display_value="Begin"&gt;72e05868c3f6aa1087613342b4013162&lt;/activity&gt;&lt;condition&gt;true&lt;/condition&gt;&lt;condition_default/&gt;&lt;condition_type&gt;standard&lt;/condition_type&gt;&lt;else_flag&gt;false&lt;/else_flag&gt;&lt;error&gt;false&lt;/error&gt;&lt;event&gt;false&lt;/event&gt;&lt;event_name/&gt;&lt;is_positive&gt;true&lt;/is_positive&gt;&lt;name&gt;Always&lt;/name&gt;&lt;order&gt;0&lt;/order&gt;&lt;short_description/&gt;&lt;skip_during_generate&gt;false&lt;/skip_during_generate&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_id&gt;32e05868c3f6aa1087613342b4013163&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:32&lt;/sys_updated_on&gt;&lt;/wf_condition&gt;&lt;wf_activity action="INSERT_OR_UPDATE"&gt;&lt;activity_definition display_value="End"&gt;c7a66f7d0a0a0b3a004544a6d2f14076&lt;/activity_definition&gt;&lt;activity_definition_updated&gt;false&lt;/activity_definition_updated&gt;&lt;databus_lookup_id&gt;2&lt;/databus_lookup_id&gt;&lt;height/&gt;&lt;input/&gt;&lt;is_parent&gt;false&lt;/is_parent&gt;&lt;name&gt;End&lt;/name&gt;&lt;new_activity_definition/&gt;&lt;notes/&gt;&lt;out_of_date&gt;false&lt;/out_of_date&gt;&lt;parent/&gt;&lt;pinned&gt;false&lt;/pinned&gt;&lt;pinned_version/&gt;&lt;stage/&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_id&gt;fae05868c3f6aa1087613342b4013163&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:32&lt;/sys_updated_on&gt;&lt;timeout&gt;1970-01-01 00:00:00&lt;/timeout&gt;&lt;vars/&gt;&lt;width&gt;80&lt;/width&gt;&lt;workflow_version display_value="IDcentral Request Certificate"&gt;3cc05868c3f6aa1087613342b40131d5&lt;/workflow_version&gt;&lt;x&gt;400&lt;/x&gt;&lt;y&gt;150&lt;/y&gt;&lt;/wf_activity&gt;&lt;sys_variable_value action="delete_multiple" query="document_key=fae05868c3f6aa1087613342b4013163"/&gt;&lt;wf_transition action="INSERT_OR_UPDATE"&gt;&lt;condition display_value="Always"&gt;32e05868c3f6aa1087613342b4013163&lt;/condition&gt;&lt;from display_value="Begin"&gt;72e05868c3f6aa1087613342b4013162&lt;/from&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_id&gt;3ae05c68c3f6aa1087613342b4013115&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:32&lt;/sys_updated_on&gt;&lt;to display_value="End"&gt;fae05868c3f6aa1087613342b4013163&lt;/to&gt;&lt;/wf_transition&gt;&lt;wf_estimated_runtime_config action="INSERT_OR_UPDATE"&gt;&lt;estimated_run_time/&gt;&lt;no_of_data_points&gt;1&lt;/no_of_data_points&gt;&lt;percentage_threshold_ert&gt;20&lt;/percentage_threshold_ert&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-14 04:13:32&lt;/sys_created_on&gt;&lt;sys_id&gt;36e05868c3f6aa1087613342b4013160&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-14 04:13:32&lt;/sys_updated_on&gt;&lt;workflow_version display_value="IDcentral Request Certificate"&gt;3cc05868c3f6aa1087613342b40131d5&lt;/workflow_version&gt;&lt;/wf_estimated_runtime_config&gt;&lt;wf_workflow_version action="update_multiple" query="workflow=fae05868c3f6aa1087613342b4013160^sys_id!=3cc05868c3f6aa1087613342b40131d5"&gt;&lt;published&gt;false&lt;/published&gt;&lt;/wf_workflow_version&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1042296557</payload_hash>
+        <record_name>IDcentral Request Certificate</record_name>
+        <reverted_from/>
+        <source>16d43023c366661087613342b40131e8</source>
+        <source_table>sys_update_set</source_table>
+        <state>current</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:13:40</sys_created_on>
+        <sys_id>78f09c68c3f6aa1087613342b401310a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>198072373170000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:13:40</sys_updated_on>
+        <type>Workflow</type>
+        <update_guid>bcf09c6886f6aa10eef5bea6c1744f09</update_guid>
+        <update_guid_history>bcf09c6886f6aa10eef5bea6c1744f09:1042296557</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="IDcentral Request Certificate">1cd710a0c33aaa1087613342b401310c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 04:43:40</sys_created_on>
+        <sys_db_object display_value="" name="wf_workflow">wf_workflow</sys_db_object>
+        <sys_id>199b9212b79c46d8845b825e71ec2849</sys_id>
+        <sys_metadata>fae05868c3f6aa1087613342b4013160</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>IDcentral Request Certificate</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_scope_delete display_value="">8cebff2c68a94643aaea493b7b5020f9</sys_scope_delete>
+        <sys_update_name>wf_workflow_fae05868c3f6aa1087613342b4013160</sys_update_name>
+        <sys_update_version display_value="wf_workflow_fae05868c3f6aa1087613342b4013160">78f09c68c3f6aa1087613342b401310a</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 04:43:40</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

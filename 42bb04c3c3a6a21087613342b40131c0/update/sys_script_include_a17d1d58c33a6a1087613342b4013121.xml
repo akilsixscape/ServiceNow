@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1784056_sixscape.GetConnectionDetails</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>GetConnectionDetails</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var GetConnectionDetails = Class.create();
+GetConnectionDetails.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	getConnectionDetails: function() {
+		var response = {};
+		response["mid_server"] = gs.getProperty("x_1784056_sixscape.Mid Server Name") || '';
+		response["end_point"] = gs.getProperty("x_1784056_sixscape.End Point") || '';
+		response["application_id"] = gs.getProperty("x_1784056_sixscape.Application ID") || '';
+		response["application_secret"] = gs.getProperty("x_1784056_sixscape.Application Secret") || '';
+		return JSON.stringify(response);
+	},
+
+    type: 'GetConnectionDetails'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-13 15:10:45</sys_created_on>
+        <sys_id>a17d1d58c33a6a1087613342b4013121</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>GetConnectionDetails</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sys_script_include_a17d1d58c33a6a1087613342b4013121</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-13 15:10:45</sys_updated_on>
+    </sys_script_include>
+</record_update>

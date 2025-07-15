@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_ui_policy">
+    <catalog_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_req_item>true</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <catalog_conditions>IO:e096c994c3b66a1087613342b40131c2=77a0f9a0c332ea1087613342b40131e0^EQ</catalog_conditions>
+        <catalog_item display_value="Request Certificate">80d089dcc3766a1087613342b40131f3</catalog_item>
+        <conditions/>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <isolate_script>true</isolate_script>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <published_ref/>
+        <reverse_if_false>true</reverse_if_false>
+        <run_scripts>false</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+
+}]]></script_true>
+        <set_values/>
+        <short_description>Show Device Addition Fields</short_description>
+        <sys_class_name>catalog_ui_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 11:21:44</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>3822bde0c332ea1087613342b4013119</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Show Device Addition Fields</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>catalog_ui_policy_3822bde0c332ea1087613342b4013119</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 11:21:54</sys_updated_on>
+        <table/>
+        <ui_type>0</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_ui_policy>
+</record_update>

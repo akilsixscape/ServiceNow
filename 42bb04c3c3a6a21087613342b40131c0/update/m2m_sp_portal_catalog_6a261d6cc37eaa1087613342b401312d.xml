@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_portal_catalog">
+    <m2m_sp_portal_catalog action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <order>200</order>
+        <sc_catalog display_value="IDcentral Catalog">fc7f385cc3766a1087613342b40131e2</sc_catalog>
+        <sp_portal display_value="Service Portal ">81b75d3147032100ba13a5554ee4902b</sp_portal>
+        <sys_class_name>m2m_sp_portal_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 09:16:17</sys_created_on>
+        <sys_id>6a261d6cc37eaa1087613342b401312d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>IDcentral Catalog.Service Portal </sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>m2m_sp_portal_catalog_6a261d6cc37eaa1087613342b401312d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-14 09:16:17</sys_updated_on>
+    </m2m_sp_portal_catalog>
+</record_update>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1784056_sixscape.get_token</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>get_token</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var get_token = Class.create();
+get_token.prototype = {
+    TestConnection: function() {
+        try {
+            var r = new sn_ws.RESTMessageV2();
+            var payload = {
+                "uid": gs.getProperty("x_1784056_sixscape.Application ID"),
+                "credential": gs.getProperty("x_1784056_sixscape.Application Secret")
+            };
+            var mid_server = gs.getProperty("x_1784056_sixscape.Mid Server Name");
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            var endpoint = gs.getProperty("x_1784056_sixscape.End Point") || "";
+            // Remove trailing slash if present
+            if (endpoint.endsWith("/")) {
+                endpoint = endpoint.substring(0, endpoint.length - 1);
+            }
+            endpoint = endpoint + "/v1/auth";
+            r.setHttpMethod("post");
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(endpoint);
+            r.setRequestBody(JSON.stringify(payload));
+            r.setHttpTimeout(60000);
+            var response = r.executeAsync();
+            var status = response.getStatusCode();
+            var responseBody = response.getBody();
+			return [status, responseBody];
+        } catch (error) {
+            return [500, "Error during token retrieval: " + error.message];
+        }
+
+    },
+    type: 'get_token'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-09 13:52:59</sys_created_on>
+        <sys_id>7414ac87c32aa21087613342b4013106</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>get_token</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sys_script_include_7414ac87c32aa21087613342b4013106</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-09 14:50:38</sys_updated_on>
+    </sys_script_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</application>
+        <file_path/>
+        <instance_id>fe2d67893b682258c55a348aa4e45ad2</instance_id>
+        <instance_name>dev311068</instance_name>
+        <name>sys_script_include_7414ac87c32aa21087613342b4013106</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_1784056_sixscape.get_token&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;mobile_callable&gt;false&lt;/mobile_callable&gt;&lt;name&gt;get_token&lt;/name&gt;&lt;sandbox_callable&gt;false&lt;/sandbox_callable&gt;&lt;script&gt;&lt;![CDATA[var get_token = Class.create();
+get_token.prototype = {
+    TestConnection: function() {
+        try {
+            var r = new sn_ws.RESTMessageV2();
+            var payload = {
+                "uid": gs.getProperty("x_1784056_sixscape.Application ID"),
+                "credential": gs.getProperty("x_1784056_sixscape.Application Secret")
+            };
+            var mid_server = gs.getProperty("x_1784056_sixscape.Mid Server Name");
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            var endpoint = gs.getProperty("x_1784056_sixscape.End Point") || "";
+            // Remove trailing slash if present
+            if (endpoint.endsWith("/")) {
+                endpoint = endpoint.substring(0, endpoint.length - 1);
+            }
+            endpoint = endpoint + "/v1/auth";
+            r.setHttpMethod("post");
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(endpoint);
+            r.setRequestBody(JSON.stringify(payload));
+            r.setHttpTimeout(60000);
+            var response = r.executeAsync();
+            var status = response.getStatusCode();
+            var responseBody = response.getBody();
+			return [status, responseBody];
+        } catch (error) {
+            return [500, "Error during token retrieval: " + error.message];
+        }
+
+    },
+    type: 'get_token'
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-07-09 13:52:59&lt;/sys_created_on&gt;&lt;sys_id&gt;7414ac87c32aa21087613342b4013106&lt;/sys_id&gt;&lt;sys_mod_count&gt;7&lt;/sys_mod_count&gt;&lt;sys_name&gt;get_token&lt;/sys_name&gt;&lt;sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape"&gt;42bb04c3c3a6a21087613342b40131c0&lt;/sys_package&gt;&lt;sys_policy&gt;read&lt;/sys_policy&gt;&lt;sys_scope display_value="Sixscape IDcentral"&gt;42bb04c3c3a6a21087613342b40131c0&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_7414ac87c32aa21087613342b4013106&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-07-09 14:50:38&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>511168885</payload_hash>
+        <record_name>get_token</record_name>
+        <reverted_from/>
+        <source>8ebb04c3c3a6a21087613342b40131c3</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-09 14:50:38</sys_created_on>
+        <sys_id>6ac2f00fc36aa21087613342b4013112</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>197efaad0b50000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-09 14:50:38</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>22c2f00fc86aa2105baea5969fb4a512</update_guid>
+        <update_guid_history>22c2f00fc86aa2105baea5969fb4a512:511168885,9782f00fcd6aa210b8372247bc448d26:860757612,cab130cb296aa210a03691eb3640ef99:-362923788,d1917c8b7b6aa210551bf8a6bccd3c32:2034814288,9dd864cb462aa210c62d7e145032057b:-2092190282,88c6648bee2aa2109dc3bc21b15bcfd6:838787737,f276608bb62aa210e106e6c1992957c1:-1519895333,1e956c87f32aa21006664b15c293a4c6:-2142385290</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-13 15:13:35</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>19717a2b7f4f4cf2870efdc77ae1a509</sys_id>
+        <sys_metadata>7414ac87c32aa21087613342b4013106</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>get_token</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_parent/>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_scope_delete display_value="">8cebff2c68a94643aaea493b7b5020f9</sys_scope_delete>
+        <sys_update_name>sys_script_include_7414ac87c32aa21087613342b4013106</sys_update_name>
+        <sys_update_version display_value="sys_script_include_7414ac87c32aa21087613342b4013106">6ac2f00fc36aa21087613342b4013112</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-13 15:13:35</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

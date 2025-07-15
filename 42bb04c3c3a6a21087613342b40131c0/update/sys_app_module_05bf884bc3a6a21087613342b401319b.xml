@@ -13,7 +13,7 @@
         <mobile_title>Connection Configuration</mobile_title>
         <mobile_view_name>Mobile</mobile_view_name>
         <name/>
-        <order>6</order>
+        <order>20</order>
         <override_menu_roles>false</override_menu_roles>
         <query>x_1784056_sixscape_connection_configurations.do?sys_target=x_1784056_sixscape_connection_configurations</query>
         <report/>
@@ -25,7 +25,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>05bf884bc3a6a21087613342b401319b</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Connection Configuration</sys_name>
         <sys_overrides/>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
@@ -33,7 +33,7 @@
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_app_module_05bf884bc3a6a21087613342b401319b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-10 09:57:32</sys_updated_on>
+        <sys_updated_on>2025-07-15 14:40:54</sys_updated_on>
         <timeline_page/>
         <title>Connection Configuration</title>
         <uncancelable>false</uncancelable>

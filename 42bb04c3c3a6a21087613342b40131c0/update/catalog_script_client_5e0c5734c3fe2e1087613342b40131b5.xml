@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Request Certificate">80d089dcc3766a1087613342b40131f3</cat_item>
+        <cat_variable>IO:c9f40954c3b66a1087613342b401319f</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>CheckBindAddressExist</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+
+    var bindAddress = g_form.getValue('bind_address').trim();
+    var bindPort = g_form.getValue('bind_port').trim();
+
+    // Clear previous messages
+    g_form.hideFieldMsg('bind_address', true);
+    g_form.hideFieldMsg('bind_port', true);
+
+    if (!bindAddress || !bindPort) {
+        g_form.setValue('validation_message', ''); // Optional clear
+        return;
+    }
+
+    // Show "Validating..." while GlideAjax runs
+    g_form.showFieldMsg('bind_address', 'Validating...', 'info');
+    g_form.showFieldMsg('bind_port', 'Validating...', 'info');
+
+    var ga = new GlideAjax('GetDeviceCertificateDetails');
+    ga.addParam('sysparm_name', 'getDeviceDetails');
+    ga.addParam('sysparm_deviceSysId', g_form.getValue('device'));
+    ga.addParam('sysparm_bindAddress', bindAddress);
+    ga.addParam('sysparm_bindPort', bindPort);
+
+    ga.getXMLAnswer(function(response) {
+        // Clear loading messages
+        g_form.hideFieldMsg('bind_address', true);
+        g_form.hideFieldMsg('bind_port', true);
+
+        try {
+            var res = JSON.parse(response);
+
+            if (res.error) {
+                g_form.showFieldMsg('bind_address', res.error, 'error');
+				g_form.showFieldMsg('bind_port', res.error, 'error');
+                g_form.setValue('validation_message', 'error');
+            } else if (res.length > 0) {
+                g_form.showFieldMsg('bind_address', 'Conflict: Bind Address and Port already exist.', 'error');
+				g_form.showFieldMsg('bind_port', 'Conflict: Bind Address and Port already exist.', 'error');
+                g_form.setValue('validation_message', 'error');
+            } else {
+                g_form.setValue('validation_message', 'success');
+            }
+        } catch (e) {
+            g_form.showFieldMsg('bind_address', 'Validation failed.', 'error');
+            g_form.setValue('validation_message', 'error');
+        }
+    });
+
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-15 13:42:08</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>5e0c5734c3fe2e1087613342b40131b5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CheckBindAddressExist</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>catalog_script_client_5e0c5734c3fe2e1087613342b40131b5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-15 13:42:08</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>
