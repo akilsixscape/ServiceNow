@@ -17,20 +17,43 @@
         <run_start>2025-07-10 07:45:52</run_start>
         <run_time>1970-01-01 08:00:00</run_time>
         <run_type>daily</run_type>
-        <script><![CDATA[new x_1784056_sixscape.ScheduleForDeviceSync().syncDevices();
-gs.error("Triggered Successfully.");]]></script>
+        <script><![CDATA[(function executeScheduler() {
+    function logSchedulerEvent(logLevel, message) {
+        var gr = new GlideRecord('x_1784056_sixscape_log');
+        gr.initialize();
+        gr.log_level = logLevel;
+        gr.script = "Sixscape IDcentral Scheduler";
+        gr.application = "Sixscape IDC";
+        gr.message = message;
+        gr.insert();
+    }
+
+    try {
+        logSchedulerEvent("Info", "Scheduler Initiated Successfully");
+        // --- Run Profile and Device Sync ---
+        new x_1784056_sixscape.ScheduleForProfileSync().syncProfiles();
+        new x_1784056_sixscape.ScheduleForDeviceSync().syncDevices();-
+        logSchedulerEvent("Info", "Scheduler Completed Successfully");
+        gs.info("Sixscape IDcentral Scheduler ran successfully.");
+    } catch (ex) {
+        logSchedulerEvent("Error", "Scheduler Error: " + ex.message);
+        gs.error("Sixscape IDcentral Scheduler error: " + ex.message);
+        throw ex; // Optional: Rethrow to fail MID job if required
+    }
+})();
+]]></script>
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-10 07:47:34</sys_created_on>
         <sys_id>522b9c57c36ee21087613342b4013159</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>9</sys_mod_count>
         <sys_name>Sixscape IDcentral Scheduler</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy/>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sysauto_script_522b9c57c36ee21087613342b4013159</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-10 11:40:33</sys_updated_on>
+        <sys_updated_on>2025-07-17 10:59:09</sys_updated_on>
         <time_zone/>
         <upgrade_safe>false</upgrade_safe>
     </sysauto_script>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_time>1970-01-01 00:00:00</entered_time>
+        <max_drift/>
+        <name>Renewal Notification</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2025-07-14 16:45:39</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[// Helper function for logging to app log table
+function logRenewalNotification(logLevel, message) {
+    var gr = new GlideRecord('x_1784056_sixscape_log');
+    gr.initialize();
+    gr.log_level = logLevel;
+    gr.script = "Renewal Notification";
+    gr.application = "Sixscape IDC";
+    gr.message = message;
+    gr.insert();
+
+    // Optionally, also log to sys logs
+    if (logLevel === "Info") gs.info(message);
+    else if (logLevel === "Warning") gs.warn(message);
+    else gs.error(message);
+}
+
+try {
+    var profileGR = new GlideRecord('x_1784056_sixscape_profile');
+    profileGR.addNotNullQuery('renewal_threshold');
+    profileGR.addNotNullQuery('assignment_group');
+    profileGR.query();
+
+    while (profileGR.next()) {
+        var threshold = parseInt(profileGR.renewal_threshold, 10);
+        var groupSysId = profileGR.assignment_group.toString();
+
+        var thresholdDate = new GlideDateTime();
+        thresholdDate.addDaysUTC(threshold); // Adds threshold days to today
+
+        var msg = "Checking devices for profile '" + profileGR.profile_name + "' (" + profileGR.getUniqueValue() + 
+            "), renewal threshold: " + threshold + " days; thresholdDate: " + thresholdDate.getDisplayValue();
+        logRenewalNotification("Info", msg);
+
+        // Get all devices under this profile with expiryDate within threshold
+        var nowDate = new GlideDateTime();
+        var deviceGR = new GlideRecord('x_1784056_sixscape_device');
+        deviceGR.addQuery('profile', profileGR.getUniqueValue());
+        deviceGR.addQuery('expiry_date', '<=', thresholdDate);
+        deviceGR.addQuery('expiry_date', '>=', nowDate);
+        deviceGR.query();
+
+        var foundDevices = 0;
+        while (deviceGR.next()) {
+            gs.eventQueue(
+                'x_1784056_sixscape.renewal_notification',
+                deviceGR,
+                groupSysId,
+                ''
+            );
+            var deviceDisplay = deviceGR.getDisplayValue() || deviceGR.sys_id.toString();
+            var expiryDisplay = deviceGR.expiry_date ? deviceGR.expiry_date.getDisplayValue() : 'N/A';
+            logRenewalNotification(
+                "Info",
+                "Renewal notification event fired for device: " + deviceDisplay + 
+                " (expiry: " + expiryDisplay + ", group: " + groupSysId + ")"
+            );
+            foundDevices++;
+        }
+
+        if (foundDevices === 0) {
+            logRenewalNotification(
+                "Info",
+                "No devices found approaching expiry (within threshold) for profile: " +
+                profileGR.profile_name + " (" + profileGR.getUniqueValue() + ")"
+            );
+        }
+    }
+    logRenewalNotification("Info", "Renewal Notification script execution completed.");
+} catch (ex) {
+    logRenewalNotification("Error", "Error in Renewal Notification script: " + ex.message);
+}
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 16:47:39</sys_created_on>
+        <sys_id>9c1db220c3f6ea1087613342b40131d0</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>Renewal Notification</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sysauto_script_9c1db220c3f6ea1087613342b40131d0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-17 11:17:26</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

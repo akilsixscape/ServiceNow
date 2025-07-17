@@ -5,5 +5,6 @@
         <element label="Application Secret" mandatory="true" max_length="255" name="application_secret" type="password2"/>
         <element label="Status" max_length="100" name="status" read_only="true" type="string"/>
         <element label="MID Server" max_length="100" name="mid_server" type="string"/>
+        <element label="Key Manager Pin" max_length="255" name="key_manager_pin" type="password2"/>
     </element>
 </database>

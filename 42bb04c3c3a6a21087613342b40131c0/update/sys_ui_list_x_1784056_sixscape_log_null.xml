@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_1784056_sixscape_log" version="2" view="">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>action_status</element>
+            <list_id display_value="x_1784056_sixscape_log" element="NULL" name="x_1784056_sixscape_log" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">b4cc702dc3f2225087613342b401310a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-07-17 09:59:00</sys_created_on>
+            <sys_id>f0ccb42dc3f2225087613342b401310d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-07-17 09:59:00</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>application</element>
+            <list_id display_value="x_1784056_sixscape_log" element="NULL" name="x_1784056_sixscape_log" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">b4cc702dc3f2225087613342b401310a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-07-17 09:59:01</sys_created_on>
+            <sys_id>b8ccb42dc3f2225087613342b401310d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-07-17 09:59:01</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>message</element>
+            <list_id display_value="x_1784056_sixscape_log" element="NULL" name="x_1784056_sixscape_log" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">b4cc702dc3f2225087613342b401310a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-07-17 09:59:01</sys_created_on>
+            <sys_id>3cccb42dc3f2225087613342b401310d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-07-17 09:59:01</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>script</element>
+            <list_id display_value="x_1784056_sixscape_log" element="NULL" name="x_1784056_sixscape_log" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">b4cc702dc3f2225087613342b401310a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-07-17 09:59:01</sys_created_on>
+            <sys_id>bcccb42dc3f2225087613342b401310d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-07-17 09:59:01</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_1784056_sixscape_log</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-07-17 09:59:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b4cc702dc3f2225087613342b401310a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1784056_sixscape_log</sys_name>
+            <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+            <sys_update_name>sys_ui_list_x_1784056_sixscape_log_null</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-07-17 09:59:00</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

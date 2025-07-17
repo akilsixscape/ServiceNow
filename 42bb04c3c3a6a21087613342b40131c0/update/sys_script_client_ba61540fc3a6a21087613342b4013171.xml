@@ -25,7 +25,8 @@
         g_form.setValue("end_point", res["end_point"]);
         g_form.setValue("application_id", res["application_id"]);
         g_form.setValue("application_secret", res["application_secret"]);
-        g_form.setValue("mid_server", res['mid_server']);
+        g_form.setValue("mid_server", res["mid_server"]);
+		g_form.setValue("key_manager_pin", res["key_manager_pin"]);
     }
 }]]></script>
         <sys_class_name>sys_script_client</sys_class_name>
@@ -34,7 +35,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ba61540fc3a6a21087613342b4013171</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>PopulateConnectionConfigurations</sys_name>
         <sys_overrides/>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
@@ -42,7 +43,7 @@
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_client_ba61540fc3a6a21087613342b4013171</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-13 15:12:54</sys_updated_on>
+        <sys_updated_on>2025-07-16 09:23:10</sys_updated_on>
         <table>x_1784056_sixscape_connection_configurations</table>
         <type>onLoad</type>
         <ui_type>0</ui_type>

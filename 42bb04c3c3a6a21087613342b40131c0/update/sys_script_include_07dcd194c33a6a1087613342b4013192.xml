@@ -38,8 +38,15 @@ GetToken.prototype = {
             var response = r.executeAsync();
             var status = response.getStatusCode();
             var responseBody = response.getBody();
-			return [status, responseBody];
+            return [status, responseBody];
         } catch (error) {
+            var log = new GlideRecordSecure('x_1784056_sixscape_log');
+            log.initialize();
+            log.log_level = "Error";
+            log.script = "GetToken";
+            log.application = "Sixscape IDC";
+            log.message = "Error during token retrieval: " + error.message;
+            log.insert();
             return [500, "Error during token retrieval: " + error.message];
         }
 
@@ -50,13 +57,13 @@ GetToken.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-13 15:07:44</sys_created_on>
         <sys_id>07dcd194c33a6a1087613342b4013192</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>GetToken</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_include_07dcd194c33a6a1087613342b4013192</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-13 15:07:44</sys_updated_on>
+        <sys_updated_on>2025-07-17 10:52:35</sys_updated_on>
     </sys_script_include>
 </record_update>

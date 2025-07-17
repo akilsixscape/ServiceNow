@@ -16,28 +16,25 @@ ScheduleForProfileSync.prototype = {
      */
     syncProfiles: function() {
         try {
+            this._log("Info", "Starting profile synchronization...");
             var authToken = this._getAuthToken();
             if (!authToken) {
+                this._log("Error", "Failed to retrieve authentication token.");
                 throw new Error('Failed to retrieve authentication token.');
             }
 
             var existingProfiles = this._getExistingProfiles();
-
             var endpoint = this._getBaseEndpoint();
             var midServer = gs.getProperty('x_1784056_sixscape.Mid Server Name');
-
             var restMessage = this._createRestMessage(midServer);
 
             var profileIds = this._fetchActiveProfileIds(restMessage, authToken, endpoint);
-
             this._processProfiles(profileIds, restMessage, authToken, endpoint, existingProfiles);
-
             this._cleanupDeletedProfiles(existingProfiles);
 
-            gs.info('Profile synchronization completed successfully.');
-
+            this._log('Info', 'Profile synchronization completed successfully.');
         } catch (ex) {
-            gs.error('Error in ScheduleForProfileSync.syncProfiles: ' + ex.message);
+            this._log('Error', 'Exception in syncProfiles: ' + ex.message);
             throw ex;
         }
     },
@@ -51,7 +48,7 @@ ScheduleForProfileSync.prototype = {
         var response = tokenObj.TestConnection();
 
         if (!response || response.length < 2) {
-            gs.error('Invalid response from Token API.');
+            this._log('Error', 'Invalid response from Token API.');
             return null;
         }
 
@@ -59,7 +56,7 @@ ScheduleForProfileSync.prototype = {
         var responseBody = response[1];
 
         if (status !== 200) {
-            gs.error('Token API returned status: ' + status);
+            this._log('Error', 'Token API returned status: ' + status);
             return null;
         }
 
@@ -67,14 +64,13 @@ ScheduleForProfileSync.prototype = {
             var parsed = JSON.parse(responseBody);
             return 'Bearer ' + parsed.authToken;
         } catch (e) {
-            gs.error('Failed to parse token response: ' + e.message);
+            this._log('Error', 'Failed to parse token response: ' + e.message);
             return null;
         }
     },
 
     /**
      * Retrieves existing profiles from the local table in "profileId|profileName" format.
-     * @returns {Array} List of existing profile identifiers.
      */
     _getExistingProfiles: function() {
         var profiles = [];
@@ -89,7 +85,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Returns the cleaned base endpoint URL from system properties.
-     * @returns {string} Base endpoint URL without trailing slash.
      */
     _getBaseEndpoint: function() {
         var endpoint = gs.getProperty('x_1784056_sixscape.End Point') || '';
@@ -101,8 +96,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Creates and configures a RESTMessageV2 object, optionally with MID Server.
-     * @param {string} midServerName MID Server name from properties.
-     * @returns {sn_ws.RESTMessageV2} Configured RESTMessageV2 instance.
      */
     _createRestMessage: function(midServerName) {
         var r = new sn_ws.RESTMessageV2();
@@ -115,10 +108,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Fetches all active profile IDs from the external API using pagination.
-     * @param {sn_ws.RESTMessageV2} restMessage REST message object.
-     * @param {string} authToken Authorization token.
-     * @param {string} baseEndpoint Base API endpoint.
-     * @returns {Array} List of profile IDs.
      */
     _fetchActiveProfileIds: function(restMessage, authToken, baseEndpoint) {
         var skip = 0;
@@ -138,54 +127,44 @@ ScheduleForProfileSync.prototype = {
 
             var response = restMessage.execute();
             if (response.haveError()) {
-                this._handleRestError(response);
+                this._logRestError('_fetchActiveProfileIds', baseEndpoint + '/v1/profile', {skip: skip, top: top}, response);
+                break;
             }
 
-            var body = JSON.parse(response.getBody());
+            var body = [];
+            try {
+                body = JSON.parse(response.getBody());
+            } catch (e) {
+                this._log('Error', '_fetchActiveProfileIds: JSON parse error: ' + e.message);
+                break;
+            }
+
             for (var i = 0; i < body.length; i++) {
                 profileIds.push(body[i].id);
             }
 
-            if (body.length !== top) {
-                break;
-            }
+            if (body.length !== top) break;
             skip += top;
         }
-
+        this._log('Info', 'Retrieved ' + profileIds.length + ' active external profiles.');
         return profileIds;
     },
 
     /**
      * Processes each profile by fetching details, updating/inserting local records,
      * and handling profile group assignments.
-     * @param {Array} profileIds List of profile IDs to process.
-     * @param {sn_ws.RESTMessageV2} restMessage REST message object.
-     * @param {string} authToken Authorization token.
-     * @param {string} baseEndpoint Base API endpoint.
-     * @param {Array} existingProfiles List of existing profiles to track deletions.
      */
     _processProfiles: function(profileIds, restMessage, authToken, baseEndpoint, existingProfiles) {
         for (var i = 0; i < profileIds.length; i++) {
             var profileId = profileIds[i];
-
-            // Fetch profile details
             var profile = this._fetchProfileDetails(restMessage, authToken, baseEndpoint, profileId);
-
-            // Fetch profile group assignment
             var profileGroupId = this._fetchProfileGroupId(restMessage, authToken, baseEndpoint, profile.name);
-
-            // Upsert profile record
             this._upsertProfileRecord(profile, profileGroupId, existingProfiles);
         }
     },
 
     /**
      * Fetches detailed profile information by profile ID.
-     * @param {sn_ws.RESTMessageV2} restMessage REST message object.
-     * @param {string} authToken Authorization token.
-     * @param {string} baseEndpoint Base API endpoint.
-     * @param {string} profileId Profile ID.
-     * @returns {Object} Parsed profile details.
      */
     _fetchProfileDetails: function(restMessage, authToken, baseEndpoint, profileId) {
         restMessage.setHttpMethod('get');
@@ -197,19 +176,19 @@ ScheduleForProfileSync.prototype = {
 
         var response = restMessage.execute();
         if (response.haveError()) {
-            this._handleRestError(response);
+            this._logRestError('_fetchProfileDetails', baseEndpoint + '/v1/profile/' + profileId, {}, response);
         }
 
-        return JSON.parse(response.getBody());
+        try {
+            return JSON.parse(response.getBody());
+        } catch (e) {
+            this._log('Error', '_fetchProfileDetails: JSON parse error: ' + e.message);
+            return {};
+        }
     },
 
     /**
      * Fetches the profile group ID by searching with profile name + "_devices".
-     * @param {sn_ws.RESTMessageV2} restMessage REST message object.
-     * @param {string} authToken Authorization token.
-     * @param {string} baseEndpoint Base API endpoint.
-     * @param {string} profileName Profile name.
-     * @returns {string|null} Profile group ID or null if not found.
      */
     _fetchProfileGroupId: function(restMessage, authToken, baseEndpoint, profileName) {
         var groupName = profileName + '_devices';
@@ -219,7 +198,6 @@ ScheduleForProfileSync.prototype = {
         var query = 'sw ' + groupName;
         var subfilter = '(entityName=sw ' + groupName + ' $or entityId=sw ' + groupName + ')';
 
-        // Construct full URL with encoded query parameters
         var fullUrl = baseSearchEndpoint +
             '?entityType=' + encodeURIComponent(entityType) +
             '&query=' + encodeURIComponent(query) +
@@ -234,10 +212,16 @@ ScheduleForProfileSync.prototype = {
 
         var response = restMessage.execute();
         if (response.haveError()) {
-            this._handleRestError(response);
+            this._logRestError('_fetchProfileGroupId', fullUrl, {}, response);
         }
 
-        var body = JSON.parse(response.getBody());
+        var body = [];
+        try {
+            body = JSON.parse(response.getBody());
+        } catch (e) {
+            this._log('Error', '_fetchProfileGroupId: JSON parse error: ' + e.message);
+            return null;
+        }
         if (body && body.length > 0) {
             return body[0].entityId || null;
         }
@@ -246,9 +230,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Inserts or updates a profile record in the local table.
-     * @param {Object} profile Profile details object.
-     * @param {string|null} profileGroupId Profile group ID.
-     * @param {Array} existingProfiles List of existing profiles to track deletions.
      */
     _upsertProfileRecord: function(profile, profileGroupId, existingProfiles) {
         var gr = new GlideRecordSecure('x_1784056_sixscape_profile');
@@ -259,7 +240,6 @@ ScheduleForProfileSync.prototype = {
             while (gr.next()) {
                 this._updateProfileRecord(gr, profile, profileGroupId);
             }
-            // Remove from existingProfiles list to track deletions
             var key = profile.id + '|' + profile.name;
             var index = existingProfiles.indexOf(key);
             if (index !== -1) {
@@ -272,9 +252,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Updates an existing profile record.
-     * @param {GlideRecord} gr GlideRecord of the profile.
-     * @param {Object} profile Profile details.
-     * @param {string|null} profileGroupId Profile group ID.
      */
     _updateProfileRecord: function(gr, profile, profileGroupId) {
         gr.profile_name = profile.name;
@@ -292,8 +269,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Inserts a new profile record.
-     * @param {Object} profile Profile details.
-     * @param {string|null} profileGroupId Profile group ID.
      */
     _insertProfileRecord: function(profile, profileGroupId) {
         var gr = new GlideRecordSecure('x_1784056_sixscape_profile');
@@ -313,7 +288,6 @@ ScheduleForProfileSync.prototype = {
 
     /**
      * Deletes profiles from the local table that no longer exist in the external system.
-     * @param {Array} existingProfiles List of profile keys remaining after processing.
      */
     _cleanupDeletedProfiles: function(existingProfiles) {
         for (var i = 0; i < existingProfiles.length; i++) {
@@ -333,26 +307,37 @@ ScheduleForProfileSync.prototype = {
 
             while (gr.next()) {
                 gr.deleteRecord();
-                gs.info('Deleted profile: ' + profileId + ' | ' + profileName);
+                this._log('Info', 'Deleted obsolete profile: ' + profileId + ' | ' + profileName);
             }
         }
     },
 
     /**
-     * Handles REST API errors by parsing and throwing meaningful messages.
-     * @param {sn_ws.RESTResponseV2} response REST response object.
-     * @throws {Error} Throws error with message from response.
+     * Handles REST API errors by logging and throwing meaningful messages.
      */
-    _handleRestError: function(response) {
+    _logRestError: function(stage, endpoint, parameters, response) {
         var responseBody = response.getBody();
-        var message = 'Unknown REST API error';
-        try {
-            var res = JSON.parse(responseBody);
-            message = res.title || message;
-        } catch (e) {
-            message = responseBody;
-        }
-        throw new Error(message);
+        var code = response.getStatusCode();
+        var message = "[REST ERROR @ " + stage + "] HTTP " + code +
+            " to " + endpoint +
+            (parameters ? " PARAMS: " + JSON.stringify(parameters) : "") +
+            " RESPONSE: " + (responseBody ? responseBody.substring(0,500) : "None");
+        this._log("Error", message);
+    },
+
+    _log: function(logLevel, message) {
+        var gr = new GlideRecord('x_1784056_sixscape_log');
+        gr.initialize();
+        gr.script = "ScheduleForProfileSync";
+        gr.log_level = logLevel;
+        gr.message = message;
+        gr.application = "Sixscape IDC";
+        gr.insert();
+
+        // Optionally also log to system logs
+        if (logLevel === "Info") gs.info(message);
+        else if (logLevel === "Warning") gs.warn(message);
+        else gs.error(message);
     },
 
     type: 'ScheduleForProfileSync'
@@ -362,13 +347,13 @@ ScheduleForProfileSync.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-10 10:47:13</sys_created_on>
         <sys_id>fc740d9fc322261087613342b4013108</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>ScheduleForProfileSync</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_include_fc740d9fc322261087613342b4013108</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-13 15:09:06</sys_updated_on>
+        <sys_updated_on>2025-07-17 10:50:31</sys_updated_on>
     </sys_script_include>
 </record_update>

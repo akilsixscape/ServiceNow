@@ -48,12 +48,9 @@ function onChange(control, oldValue, newValue, isLoading) {
     g_form.clearValue("bind_port");
     g_form.clearValue("download_certificate_only");
 	g_form.clearValue("validation_message");
+	g_form.clearValue("certificate_creation_time");
 
     g_form.setDisplay("csr", true);
-
-    if (deviceSysId == "77a0f9a0c332ea1087613342b40131e0") {
-        return;
-    }
 
     // Show spinner before async call
     showLoadingMessage();
@@ -67,11 +64,14 @@ function onChange(control, oldValue, newValue, isLoading) {
         try {
             var res = JSON.parse(answer);
             if (res.error) {
-                alert(res.error);
-                return;
+                throw new Error(res.error);
             }
+			if (res.length == 0) {
+				return;
+			}
             g_form.setValue("certificate_name", res.name || "");
             g_form.setValue("serial_number", res.serialNumber || "");
+			g_form.setValue("certificate_creation_time", res.createdDate || "");
 
             var expiryString = res.expiryDate;
             if (expiryString) {
@@ -91,9 +91,15 @@ function onChange(control, oldValue, newValue, isLoading) {
 
                 g_form.setValue("certificate_expiry", localDateTime);
             }
-        } catch (err) {
-            var error = answer || "Couldn't parse the response for the certificate details.";
-            alert(error);
+        } catch (error) {
+            var message = error.message || "Couldn't parse the response for the certificate details.";
+            alert(message);
+            var ga = new GlideAjax('IDCLogger');
+            ga.addParam("sysparm_name", "idcLogger");
+            ga.addParam("sysparm_logLevel", "Error");
+            ga.addParam("sysparm_script", "GetDeviceDetails");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
         }
     });
 }]]></script>
@@ -103,7 +109,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1d47f420c3faaa1087613342b4013165</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>28</sys_mod_count>
         <sys_name>GetDeviceDetails</sys_name>
         <sys_overrides/>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
@@ -111,7 +117,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>catalog_script_client_1d47f420c3faaa1087613342b4013165</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-15 13:53:07</sys_updated_on>
+        <sys_updated_on>2025-07-17 11:25:41</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

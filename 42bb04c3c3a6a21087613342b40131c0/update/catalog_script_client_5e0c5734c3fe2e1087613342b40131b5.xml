@@ -27,8 +27,8 @@
     var bindPort = g_form.getValue('bind_port').trim();
 
     // Clear previous messages
-    g_form.hideFieldMsg('bind_address', true);
-    g_form.hideFieldMsg('bind_port', true);
+    // g_form.hideFieldMsg('bind_address', true);
+    // g_form.hideFieldMsg('bind_port', true);
 
     if (!bindAddress || !bindPort) {
         g_form.setValue('validation_message', ''); // Optional clear
@@ -64,9 +64,15 @@
             } else {
                 g_form.setValue('validation_message', 'success');
             }
-        } catch (e) {
-            g_form.showFieldMsg('bind_address', 'Validation failed.', 'error');
-            g_form.setValue('validation_message', 'error');
+        } catch (error) {
+			var message = "Error while validating the bindAddress and bindPort: " + error.message;
+			alert(message);
+            var ga = new GlideAjax('IDCLogger');
+            ga.addParam("sysparm_name", "idcLogger");
+            ga.addParam("sysparm_logLevel", "Error");
+            ga.addParam("sysparm_script", "CheckBindAddressExist");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
         }
     });
 
@@ -77,7 +83,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>5e0c5734c3fe2e1087613342b40131b5</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>CheckBindAddressExist</sys_name>
         <sys_overrides/>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
@@ -85,7 +91,7 @@
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>catalog_script_client_5e0c5734c3fe2e1087613342b40131b5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-15 13:42:08</sys_updated_on>
+        <sys_updated_on>2025-07-17 13:37:16</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

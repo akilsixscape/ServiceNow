@@ -11,7 +11,6 @@
         <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var ScheduleForDeviceSync = Class.create();
 ScheduleForDeviceSync.prototype = {
-    // Cache token and expiry for bulk request processing 
     _cachedToken: null,
     _cachedExpiry: 0,
 
@@ -23,91 +22,76 @@ ScheduleForDeviceSync.prototype = {
             var endpoint = this._getCleanEndpoint();
             var midServer = gs.getProperty("x_1784056_sixscape.Mid Server Name");
 
-            // Initialize reusable RESTMessageV2 object
-            var restMessage = this._createRestMessage(midServer);
-
-            // Process each profile group
             profileGroupIds.forEach(function(groupId) {
-                gs.info("Processing profile group: " + groupId);
+				this._log("Info", "Processing profile group: " + groupId);
                 var profileSysId = this._getProfileSysIdByGroupId(groupId);
                 if (!profileSysId) {
-                    gs.warn("No profile found for group id: " + groupId);
+					this._log("Warning", "No profile found for group id: " + groupId);
                     return;
                 }
 
-                // Refresh token before API call
                 authToken = this._getValidAuthToken();
+                var restMessage = this._createRestMessage(midServer);
 
-                // Fetch devices for this profile group with pagination
                 var deviceOwnerIds = this._fetchDevicesByOwner(restMessage, authToken, endpoint, groupId, profileSysId, existingDeviceIds);
 
-                // Refresh token before batch processing
-                authToken = this._getValidAuthToken();
+                // Defensive: **skip batch processing if we get no ownerIds**
+                if (!deviceOwnerIds || deviceOwnerIds.length === 0) {
+					this._log("Warning", "No deviceOwnerIds found for group: " + groupId + ". Skipping batch.");
+                    return;
+                }
 
-                restMessage = this._createRestMessage(midServer); // reset REST message for batch processing
+                authToken = this._getValidAuthToken();
+                restMessage = this._createRestMessage(midServer);
 
                 this._processDevicesInBatches(restMessage, authToken, endpoint, deviceOwnerIds, profileSysId, existingDeviceIds);
 
             }.bind(this));
 
             this._deleteObsoleteDevices(existingDeviceIds);
+			this._log("Info", "Device sync completed.");
 
-            gs.info("Device sync completed.");
-
-            // Refresh token before updating certificates
             authToken = this._getValidAuthToken();
-
             this._updateCertificatesForDevices(authToken, endpoint);
 
         } catch (ex) {
-            gs.error("Error in ScheduleForDeviceSync.syncDevices: " + ex.message);
+            this._logError("top-level", "exception", "", "", ex.message);
             throw ex;
         }
     },
 
-    /**
-     * Returns a valid Bearer token, caching and refreshing it if expired.
-     */
     _getValidAuthToken: function() {
         var now = Math.floor(new Date().getTime() / 1000);
-
-        if (this._cachedToken && this._cachedExpiry > now + 60) { // 60 seconds buffer
+        if (this._cachedToken && this._cachedExpiry > now + 60) {
             return this._cachedToken;
         }
-
         var tokenObj = new GetToken();
         var response = tokenObj.TestConnection();
-
-        if (!response || response.length < 2) {
+        if (!Array.isArray(response) || response.length < 2) {
+            this._logError("auth", "getToken", "", "", "Invalid response: " + JSON.stringify(response));
             throw new Error('Invalid response from Token API.');
         }
-
         var status = response[0];
         var responseBody = response[1];
-
         if (status !== 200) {
+            this._logError("auth", "getToken", "", "", "Token API returned status: " + status);
             throw new Error('Token API returned status: ' + status);
         }
-
         var parsed = JSON.parse(responseBody);
         var rawToken = parsed.authToken;
         if (!rawToken) {
+            this._logError("auth", "getToken", "", "", "Token response missing authToken");
             throw new Error('Token response missing authToken');
         }
-
         this._cachedToken = 'Bearer ' + rawToken;
         this._cachedExpiry = this._getExpiryFromJwt(rawToken);
-
         if (!this._cachedExpiry) {
+            this._logError("auth", "getToken", "", "", "Failed to parse expiry from token");
             throw new Error('Failed to parse expiry from token');
         }
-
         return this._cachedToken;
     },
 
-    /**
-     * Extracts expiry (exp) from JWT token string.
-     */
     _getExpiryFromJwt: function(token) {
         var parts = token.split('.');
         if (parts.length !== 3) return null;
@@ -122,9 +106,6 @@ ScheduleForDeviceSync.prototype = {
         }
     },
 
-    /**
-     * Base64 URL decode helper using gs.base64Decode() for scoped apps.
-     */
     _base64UrlDecode: function(str) {
         str = str.replace(/-/g, '+').replace(/_/g, '/');
         while (str.length % 4) {
@@ -133,18 +114,14 @@ ScheduleForDeviceSync.prototype = {
         try {
             return gs.base64Decode(str);
         } catch (e) {
-            gs.error('Base64 decode error: ' + e.message);
+            this._logError("internal", "base64decode", "", str, "Base64 decode error: " + e.message);
             return null;
         }
     },
 
-    /**
-     * Retrieves all existing device IDs from local table.
-     */
     _getExistingDeviceIds: function() {
         var deviceIds = [];
         var gr = new GlideRecordSecure('x_1784056_sixscape_device');
-		// This is to skip the Add New Device Option
         gr.addQuery("device_name", "NOT LIKE", "Add New Device");
         gr.query();
         while (gr.next()) {
@@ -153,9 +130,6 @@ ScheduleForDeviceSync.prototype = {
         return deviceIds;
     },
 
-    /**
-     * Retrieves all profile group IDs from local profile table.
-     */
     _getProfileGroupIds: function() {
         var groupIds = [];
         var gr = new GlideRecordSecure('x_1784056_sixscape_profile');
@@ -169,20 +143,12 @@ ScheduleForDeviceSync.prototype = {
         return groupIds;
     },
 
-    /**
-     * Returns cleaned endpoint URL without trailing slash.
-     */
     _getCleanEndpoint: function() {
         var endpoint = gs.getProperty("x_1784056_sixscape.End Point") || "";
-        if (endpoint.endsWith("/")) {
-            endpoint = endpoint.slice(0, -1);
-        }
+        if (endpoint.endsWith("/")) endpoint = endpoint.slice(0, -1);
         return endpoint;
     },
 
-    /**
-     * Creates and configures RESTMessageV2 object with MID Server if set.
-     */
     _createRestMessage: function(midServer) {
         var r = new sn_ws.RESTMessageV2();
         if (midServer && midServer.trim() !== '') {
@@ -192,9 +158,6 @@ ScheduleForDeviceSync.prototype = {
         return r;
     },
 
-    /**
-     * Retrieves profile sys_id by profile_group_id.
-     */
     _getProfileSysIdByGroupId: function(groupId) {
         var gr = new GlideRecordSecure('x_1784056_sixscape_profile');
         gr.addQuery('profile_group_id', groupId);
@@ -205,10 +168,6 @@ ScheduleForDeviceSync.prototype = {
         return null;
     },
 
-    /**
-     * Fetch devices owned by profile group with pagination, update/insert locally.
-     * Returns list of deviceOwnerIds found.
-     */
     _fetchDevicesByOwner: function(restMessage, authToken, endpoint, groupId, profileSysId, existingDeviceIds) {
         var deviceOwnerIds = [];
         var skip = 0,
@@ -228,26 +187,35 @@ ScheduleForDeviceSync.prototype = {
 
             var response = restMessage.execute();
             if (response.haveError()) {
-                this._handleRestError(response);
-            }
-
-            var body = JSON.parse(response.getBody());
-            body.forEach(function(device) {
-                deviceOwnerIds.push(device.deviceId);
-                this._upsertDevice(device, profileSysId, existingDeviceIds);
-            }.bind(this));
-
-            if (body.length !== top) {
+                this._logRestError("fetchDevicesByOwner", endpoint + "/v1/device", {
+                    groupId: groupId,
+                    skip: skip,
+                    top: top
+                }, response);
                 break;
             }
+            var body;
+            try {
+                body = JSON.parse(response.getBody());
+            } catch (e) {
+                this._logError("fetchDevicesByOwner", "parseBody", endpoint + "/v1/device", response.getBody(), e.message);
+                break;
+            }
+            if (!body || !Array.isArray(body) || body.length === 0) break;
+
+            body.forEach(function(device) {
+                if (device && device.deviceId) {
+                    deviceOwnerIds.push(device.deviceId);
+                    this._upsertDevice(device, profileSysId, existingDeviceIds);
+                }
+            }.bind(this));
+
+            if (body.length !== top) break;
             skip += top;
         }
         return deviceOwnerIds;
     },
 
-    /**
-     * Upsert device in local table.
-     */
     _upsertDevice: function(device, profileSysId, existingDeviceIds) {
         var gr = new GlideRecordSecure('x_1784056_sixscape_device');
         gr.addQuery('device_id', device.deviceId);
@@ -277,24 +245,29 @@ ScheduleForDeviceSync.prototype = {
         }
     },
 
-    /**
-     * Processes devices in batches of 100 with $subfilter queries.
-     */
     _processDevicesInBatches: function(restMessage, authToken, endpoint, deviceOwnerIds, profileSysId, existingDeviceIds) {
         var batchSize = 100;
-
         for (var start = 0; start < deviceOwnerIds.length; start += batchSize) {
             var currentBatch = deviceOwnerIds.slice(start, start + batchSize);
+            if (!currentBatch || currentBatch.length === 0) {
+				this._log("Warning", "Empty batch; skipping REST call.");
+                continue;
+            }
+
+            var conditions = currentBatch.map(function(id) {
+                return "deviceOwnerId=eq " + id;
+            });
+            var filterString = "(" + conditions.join(" $or ") + ")";
+
+            if (!filterString || filterString === "()") {
+				this._log("Warning", "No condition/filter string; skipping batch.");
+                continue;
+            }
+
             var skip = 0,
                 top = 1000;
-
             while (true) {
                 authToken = this._getValidAuthToken();
-                var conditions = currentBatch.map(function(id) {
-                    return "deviceOwnerId=eq " + id;
-                });
-                var filterString = "(" + conditions.join(" $or ") + ")";
-
                 restMessage.setHttpMethod("get");
                 restMessage.setRequestHeader("Authorization", authToken);
                 restMessage.setRequestHeader('User-Agent', 'snow');
@@ -307,25 +280,34 @@ ScheduleForDeviceSync.prototype = {
 
                 var response = restMessage.execute();
                 if (response.haveError()) {
-                    this._handleRestError(response);
+                    this._logRestError("processDevicesInBatches", endpoint + "/v1/device", {
+                        filterString: filterString,
+                        skip: skip,
+                        top: top
+                    }, response);
+                    break;
                 }
 
-                var body = JSON.parse(response.getBody());
+                var body;
+                try {
+                    body = JSON.parse(response.getBody());
+                } catch (e) {
+                    this._logError("processDevicesInBatches", "parseBody", endpoint + "/v1/device", response.getBody(), e.message);
+                    break;
+                }
+
+                if (!body || !Array.isArray(body) || body.length === 0) break;
+
                 body.forEach(function(device) {
                     this._upsertDevice(device, profileSysId, existingDeviceIds);
                 }.bind(this));
 
-                if (body.length !== top) {
-                    break;
-                }
+                if (body.length !== top) break;
                 skip += top;
             }
         }
     },
 
-    /**
-     * Deletes devices that no longer exist externally.
-     */
     _deleteObsoleteDevices: function(existingDeviceIds) {
         existingDeviceIds.forEach(function(deviceId) {
             var gr = new GlideRecordSecure('x_1784056_sixscape_device');
@@ -333,14 +315,11 @@ ScheduleForDeviceSync.prototype = {
             gr.query();
             while (gr.next()) {
                 gr.deleteRecord();
-                gs.info("Deleted obsolete device: " + deviceId);
+				this._log("Info", "Deleted obsolete device: " + deviceId);
             }
         });
     },
 
-    /**
-     * Updates certificates for all devices.
-     */
     _updateCertificatesForDevices: function(authToken, endpoint) {
         var gr = new GlideRecordSecure('x_1784056_sixscape_device');
         gr.query();
@@ -364,44 +343,70 @@ ScheduleForDeviceSync.prototype = {
 
             var response = restMessage.execute();
             if (response.haveError()) {
-                var responseBody = response.getBody();
-                gs.error(responseBody);
-                try {
-                    var res = JSON.parse(responseBody);
-                    gs.error(res.title);
-                } catch (err) {
-                    gs.error(responseBody);
-                }
+                this._logRestError("updateCertificatesForDevices", endpoint + "/v1/certificate", {
+                    deviceId: deviceId,
+                    deviceOwnerId: deviceOwnerId,
+                    subfilter: subfilter
+                }, response);
                 continue;
             }
 
-            var body = JSON.parse(response.getBody());
-            if (body.length > 0) {
-                var expiryDateGDT = new GlideDateTime(body[0].expiryDate);
-                gr.certificate_name = body[0].name;
-                gr.certificate_status = body[0].status;
-                gr.certificate_creation_time = body[0].createdDate;
-                gr.serial_number = body[0].serialNumber;
-                gr.expiry_date = expiryDateGDT;
-                gr.update();
+            var body;
+            try {
+                body = JSON.parse(response.getBody());
+            } catch (e) {
+                this._logError("updateCertificatesForDevices", "parseBody", endpoint + "/v1/certificate", response.getBody(), e.message);
+                continue;
             }
+            if (!body || !Array.isArray(body) || body.length === 0) continue;
+
+            var expiryDateGDT = new GlideDateTime(body[0].expiryDate);
+            gr.certificate_name = body[0].name;
+            gr.certificate_status = body[0].status;
+            gr.certificate_creation_time = body[0].createdDate;
+            gr.serial_number = body[0].serialNumber;
+            gr.expiry_date = expiryDateGDT;
+            gr.update();
         }
     },
 
     /**
-     * Handles REST API errors by throwing descriptive errors.
+     * Log REST API error and insert to a custom table, if present.
      */
-    _handleRestError: function(response) {
+    _logRestError: function(stage, endpoint, parameters, response) {
         var responseBody = response.getBody();
-        var message = 'Unknown REST API error';
-        try {
-            gs.error("REST API ERROR RESPONSE: " + responseBody);
-            var res = JSON.parse(responseBody);
-            message = res.title || message;
-        } catch (e) {
-            message = responseBody;
-        }
-        throw new Error(message);
+        var code = response.getStatusCode();
+        var message = "REST error: HTTP " + code + " - " + responseBody;
+		this._log("Error", message);
+        // gs.error(message);
+        this._logError(stage, "rest", endpoint, JSON.stringify(parameters), responseBody);
+    },
+
+    /**
+     * General error logger, logs to table if present.
+     */
+    _logError: function(stage, method, endpoint, params, errMsg) {
+        var msg = "DeviceSync error @ " + stage + "/" + method +
+            " ENDPOINT: " + endpoint +
+            " PARAMS: " + params +
+            " ERROR: " + errMsg;
+		this._log("Error", msg);
+        // gs.error(msg);
+    },
+
+    _log: function(logLevel, message) {
+        var gr = new GlideRecord('x_1784056_sixscape_log');
+        gr.initialize();
+        gr.script = "ScheduleForDeviceSync";
+        gr.log_level = logLevel;
+        gr.message = message;
+        gr.application = "Sixscape IDC";
+        gr.insert();
+
+        // Optionally mirror to sys logs for real-time debug
+        if (logLevel == "Info") gs.info(message);
+        else if (logLevel == "Warning") gs.warn(message);
+        else gs.error(message);
     },
 
     type: 'ScheduleForDeviceSync'
@@ -410,13 +415,13 @@ ScheduleForDeviceSync.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-10 12:05:10</sys_created_on>
         <sys_id>804615dbc3a2261087613342b4013129</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>42</sys_mod_count>
         <sys_name>ScheduleForDeviceSync</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_include_804615dbc3a2261087613342b4013129</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-15 07:29:55</sys_updated_on>
+        <sys_updated_on>2025-07-17 11:18:34</sys_updated_on>
     </sys_script_include>
 </record_update>
