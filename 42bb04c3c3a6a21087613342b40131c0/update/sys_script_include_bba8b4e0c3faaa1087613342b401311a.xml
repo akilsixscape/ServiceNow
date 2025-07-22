@@ -15,12 +15,12 @@ GetDeviceCertificateDetails.prototype = Object.extendsObject(global.AbstractAjax
 		var result = {};
 		try {
 			var deviceSysId = this.getParameter("sysparm_deviceSysId");
-			if (!deviceSysId) return this._error("Device Sys ID is required.");
+			if (!deviceSysId) return this._error("Application Sys ID is required.");
 
 			var device = this._getDeviceRecord(deviceSysId);
-			if (!device) return this._error("Device not found.");
+			if (!device) return this._error("Application not found.");
 
-			if (device.deviceName == "Add New Device") {
+			if (device.deviceName == "Add New Application") {
 				return JSON.stringify([]);
 			}
 
@@ -53,13 +53,13 @@ GetDeviceCertificateDetails.prototype = Object.extendsObject(global.AbstractAjax
 			var bindAddress = this.getParameter("sysparm_bindAddress");
 			var bindPort = this.getParameter("sysparm_bindPort");
 
-			if (!deviceSysId) return this._error("Device Sys ID is required.");
+			if (!deviceSysId) return this._error("Application Sys ID is required.");
 
 			var device = this._getDeviceRecord(deviceSysId);
-			if (!device) return this._error("Device not found.");
+			if (!device) return this._error("Application not found.");
 
 			// Special case: only call REST API if 'Add New Device'
-			if (device.deviceName != "Add New Device") {
+			if (device.deviceName != "Add New Application") {
 				return JSON.stringify([]);
 			}
 
@@ -152,13 +152,13 @@ GetDeviceCertificateDetails.prototype = Object.extendsObject(global.AbstractAjax
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-14 07:08:10</sys_created_on>
         <sys_id>bba8b4e0c3faaa1087613342b401311a</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>19</sys_mod_count>
         <sys_name>GetDeviceCertificateDetails</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_include_bba8b4e0c3faaa1087613342b401311a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-17 08:45:47</sys_updated_on>
+        <sys_updated_on>2025-07-21 07:47:58</sys_updated_on>
     </sys_script_include>
 </record_update>

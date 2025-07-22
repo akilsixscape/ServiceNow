@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
+    <catalog_ui_policy_action action="INSERT_OR_UPDATE">
+        <catalog_item display_value="Revoke Certificate">210aac36c37ea65087613342b4013156</catalog_item>
+        <catalog_variable>IO:03baac36c37ea65087613342b401315e</catalog_variable>
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <order>100</order>
+        <sys_class_name>catalog_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-21 06:07:50</sys_created_on>
+        <sys_id>611ee4fac37ea65087613342b4013102</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>device</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>catalog_ui_policy_action_611ee4fac37ea65087613342b4013102</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-21 06:07:50</sys_updated_on>
+        <table/>
+        <ui_policy display_value="Hide Fields On-load - Revoke">fa9d247ac37ea65087613342b40131c2</ui_policy>
+        <value/>
+        <value_action>clear_value</value_action>
+        <variable>device</variable>
+        <variable_set/>
+        <visible>false</visible>
+    </catalog_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=611ee4fac37ea65087613342b4013102"/>
+</record_update>

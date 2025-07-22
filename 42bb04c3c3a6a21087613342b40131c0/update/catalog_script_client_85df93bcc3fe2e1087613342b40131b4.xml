@@ -32,6 +32,13 @@
         }
     }
 
+	var certificateName = g_form.getValue("certificate_name");
+	var hostname = g_form.getValue("hostname");
+	if (certificateName == "" && hostname == "") {
+		alert("Please provide valid certificate details to proceed with the request.");
+		return false;
+	}
+
     var msg = g_form.getValue('validation_message');
     if (msg == "error") {
         alert('Please resolve the Bind Address and Port validation error before submitting.');
@@ -45,7 +52,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>85df93bcc3fe2e1087613342b40131b4</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>ValidateCSR</sys_name>
         <sys_overrides/>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
@@ -53,7 +60,7 @@
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>catalog_script_client_85df93bcc3fe2e1087613342b40131b4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-15 14:43:27</sys_updated_on>
+        <sys_updated_on>2025-07-21 07:58:05</sys_updated_on>
         <table/>
         <type>onSubmit</type>
         <ui_type>10</ui_type>

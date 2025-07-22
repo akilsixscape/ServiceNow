@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Revoke Certificate">210aac36c37ea65087613342b4013156</cat_item>
+        <cat_variable>IO:03baac36c37ea65087613342b401315e</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>GetDeviceDetails-Revoke</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[function showLoadingMessage() {
+    // Fallback: show field message
+    g_form.showFieldMsg('certificate_expiry', 'Loading...', 'info');
+    g_form.showFieldMsg('common_name', 'Loading...', 'info');
+    g_form.showFieldMsg('serial_number', 'Loading...', 'info');
+	g_form.showFieldMsg('certificate_status', 'Loading...', 'info');
+}
+
+function showErrorMessage(error) {
+    // Fallback: show field message
+    g_form.showFieldMsg('certificate_expiry', error, 'error');
+    g_form.showFieldMsg('certificate_name', error, 'error');
+    g_form.showFieldMsg('serial_number', error, 'error');
+}
+
+function hideLoadingMessage() {
+    g_form.hideFieldMsg('certificate_expiry', true);
+    g_form.hideFieldMsg('common_name', true);
+    g_form.hideFieldMsg('serial_number', true);
+	g_form.hideFieldMsg('certificate_status', true);
+}
+
+// --- onChange Client Script ---
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+
+    var deviceSysId = g_form.getValue("device");
+    g_form.clearValue("serial_number");
+    g_form.clearValue("certificate_expiry");
+    g_form.clearValue("common_name");
+
+    // Show spinner before async call
+    showLoadingMessage();
+
+    var ga = new GlideAjax("GetDeviceCertificateDetails");
+    ga.addParam("sysparm_name", "getDeviceCertificateDetails");
+    ga.addParam("sysparm_deviceSysId", deviceSysId);
+    ga.getXMLAnswer(function(answer) {
+        // Hide spinner after response
+        hideLoadingMessage();
+        try {
+            var res = JSON.parse(answer);
+            if (res.error) {
+                throw new Error(res.error);
+            }
+			if (res.length == 0) {
+				return;
+			}
+            g_form.setValue("common_name", res.name || "");
+            g_form.setValue("serial_number", res.serialNumber || "");
+			g_form.setValue("certificate_creation_time", res.createdDate || "");
+			g_form.setValue("certificate_status", res.status || "");
+
+            var expiryString = res.expiryDate;
+            if (expiryString) {
+                // Parse as UTC
+                var utcDate = new Date(expiryString + "Z"); // "Z" tells JS it's UTC
+
+                // Get components in user's local timezone
+                var year = utcDate.getFullYear();
+                var month = ("0" + (utcDate.getMonth() + 1)).slice(-2);
+                var day = ("0" + utcDate.getDate()).slice(-2);
+                var hours = ("0" + utcDate.getHours()).slice(-2);
+                var minutes = ("0" + utcDate.getMinutes()).slice(-2);
+                var seconds = ("0" + utcDate.getSeconds()).slice(-2);
+
+                // Format as "YYYY-MM-DD HH:mm:ss"
+                var localDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+
+                g_form.setValue("certificate_expiry", localDateTime);
+            }
+        } catch (error) {
+            var message = error.message || "Couldn't parse the response for the certificate details.";
+            alert(message);
+			showErrorMessage(message);
+            var ga = new GlideAjax('IDCLogger');
+            ga.addParam("sysparm_name", "idcLogger");
+            ga.addParam("sysparm_logLevel", "Error");
+            ga.addParam("sysparm_script", "GetDeviceDetails-Revoke");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    });
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-21 06:21:24</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>91a0b8bec37ea65087613342b40131b7</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>GetDeviceDetails-Revoke</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>catalog_script_client_91a0b8bec37ea65087613342b40131b7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-21 08:01:20</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

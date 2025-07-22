@@ -25,6 +25,13 @@
     g_form.showFieldMsg('serial_number', 'Loading...', 'info');
 }
 
+function showErrorMessage(error) {
+    // Fallback: show field message
+    g_form.showFieldMsg('certificate_expiry', error, 'error');
+    g_form.showFieldMsg('certificate_name', error, 'error');
+    g_form.showFieldMsg('serial_number', error, 'error');
+}
+
 function hideLoadingMessage() {
     g_form.hideFieldMsg('certificate_expiry', true);
     g_form.hideFieldMsg('certificate_name', true);
@@ -72,6 +79,7 @@ function onChange(control, oldValue, newValue, isLoading) {
             g_form.setValue("certificate_name", res.name || "");
             g_form.setValue("serial_number", res.serialNumber || "");
 			g_form.setValue("certificate_creation_time", res.createdDate || "");
+			g_form.setValue("certificate_status", res.status || "");
 
             var expiryString = res.expiryDate;
             if (expiryString) {
@@ -94,6 +102,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         } catch (error) {
             var message = error.message || "Couldn't parse the response for the certificate details.";
             alert(message);
+			showErrorMessage(message);
             var ga = new GlideAjax('IDCLogger');
             ga.addParam("sysparm_name", "idcLogger");
             ga.addParam("sysparm_logLevel", "Error");
@@ -109,7 +118,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>1d47f420c3faaa1087613342b4013165</sys_id>
-        <sys_mod_count>28</sys_mod_count>
+        <sys_mod_count>34</sys_mod_count>
         <sys_name>GetDeviceDetails</sys_name>
         <sys_overrides/>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
@@ -117,7 +126,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>catalog_script_client_1d47f420c3faaa1087613342b4013165</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-17 11:25:41</sys_updated_on>
+        <sys_updated_on>2025-07-21 07:59:48</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

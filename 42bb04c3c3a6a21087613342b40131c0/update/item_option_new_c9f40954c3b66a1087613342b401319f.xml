@@ -21,7 +21,7 @@
         <dynamic_value_dot_walk_path/>
         <dynamic_value_field/>
         <enable_also_request_for>false</enable_also_request_for>
-        <example_text/>
+        <example_text>0.0.0.0</example_text>
         <field/>
         <global>false</global>
         <help_tag>More information</help_tag>
@@ -44,7 +44,7 @@
         <mask_use_encryption>false</mask_use_encryption>
         <name>bind_address</name>
         <not_available_conversation>false</not_available_conversation>
-        <order>700</order>
+        <order>900</order>
         <post_insert_script/>
         <price_if_checked>0</price_if_checked>
         <pricing_implications>false</pricing_implications>
@@ -79,14 +79,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-13 13:22:53</sys_created_on>
         <sys_id>c9f40954c3b66a1087613342b401319f</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_name>Bind Address</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy/>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>item_option_new_c9f40954c3b66a1087613342b401319f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-17 13:02:25</sys_updated_on>
+        <sys_updated_on>2025-07-18 11:18:40</sys_updated_on>
         <table/>
         <tooltip/>
         <topic_block/>

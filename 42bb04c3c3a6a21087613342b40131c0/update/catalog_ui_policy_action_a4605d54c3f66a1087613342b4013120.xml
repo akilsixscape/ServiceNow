@@ -22,7 +22,7 @@
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-07-13 14:12:33</sys_updated_on>
         <table/>
-        <ui_policy display_value="Hide fields on load">e68fc554c3f66a1087613342b4013145</ui_policy>
+        <ui_policy display_value="Hide Fields On-load">e68fc554c3f66a1087613342b4013145</ui_policy>
         <value/>
         <value_action>clear_value</value_action>
         <variable>bind_address</variable>

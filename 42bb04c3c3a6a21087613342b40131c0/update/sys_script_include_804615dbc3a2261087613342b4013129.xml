@@ -122,7 +122,7 @@ ScheduleForDeviceSync.prototype = {
     _getExistingDeviceIds: function() {
         var deviceIds = [];
         var gr = new GlideRecordSecure('x_1784056_sixscape_device');
-        gr.addQuery("device_name", "NOT LIKE", "Add New Device");
+        gr.addQuery("device_name", "NOT LIKE", "Add New Application");
         gr.query();
         while (gr.next()) {
             deviceIds.push(gr.getValue('device_id'));
@@ -309,13 +309,14 @@ ScheduleForDeviceSync.prototype = {
     },
 
     _deleteObsoleteDevices: function(existingDeviceIds) {
+		var self = this;
         existingDeviceIds.forEach(function(deviceId) {
             var gr = new GlideRecordSecure('x_1784056_sixscape_device');
             gr.addQuery('device_id', deviceId);
             gr.query();
             while (gr.next()) {
                 gr.deleteRecord();
-				this._log("Info", "Deleted obsolete device: " + deviceId);
+				self._log("Info", "Deleted obsolete application: " + deviceId);
             }
         });
     },
@@ -415,13 +416,13 @@ ScheduleForDeviceSync.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-10 12:05:10</sys_created_on>
         <sys_id>804615dbc3a2261087613342b4013129</sys_id>
-        <sys_mod_count>42</sys_mod_count>
+        <sys_mod_count>45</sys_mod_count>
         <sys_name>ScheduleForDeviceSync</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_include_804615dbc3a2261087613342b4013129</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-17 11:18:34</sys_updated_on>
+        <sys_updated_on>2025-07-21 08:08:37</sys_updated_on>
     </sys_script_include>
 </record_update>
