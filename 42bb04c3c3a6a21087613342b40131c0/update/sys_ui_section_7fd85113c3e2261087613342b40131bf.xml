@@ -4,13 +4,13 @@
             <element>device_name</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>73122550c37a6a1087613342b401319a</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d94fc813c3b66a5087613342b40131aa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,167 +18,153 @@
             <element>device_id</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>f7122550c37a6a1087613342b401319a</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d54fc813c3b66a5087613342b40131c4</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>device_owner_id</element>
-            <position>2</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>7f122550c37a6a1087613342b401319a</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>certificate_name</element>
-            <position>3</position>
+            <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>f3122550c37a6a1087613342b401319b</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>dd4fc813c3b66a5087613342b40131c4</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>serial_number</element>
-            <position>4</position>
+            <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>7b122550c37a6a1087613342b401319b</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d54fc813c3b66a5087613342b40131c5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>certificate_creation_time</element>
-            <position>5</position>
+            <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>ff122550c37a6a1087613342b401319b</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>dd4fc813c3b66a5087613342b40131c5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>certificate_status</element>
-            <position>6</position>
+            <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>77122550c37a6a1087613342b401319c</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d54fc813c3b66a5087613342b40131c6</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>device_status</element>
-            <position>7</position>
+            <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>fb122550c37a6a1087613342b401319c</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>dd4fc813c3b66a5087613342b40131c6</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.begin_split</element>
-            <position>8</position>
+            <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>73122550c37a6a1087613342b401319d</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d54fc813c3b66a5087613342b40131c7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type>.begin_split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>expiry_date</element>
-            <position>9</position>
+            <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>f7122550c37a6a1087613342b401319d</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>dd4fc813c3b66a5087613342b40131c7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>10</position>
+            <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>7f122550c37a6a1087613342b401319d</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d54fc813c3b66a5087613342b40131c8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>profile</element>
-            <position>11</position>
+            <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>f3122550c37a6a1087613342b401319e</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>dd4fc813c3b66a5087613342b40131c8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.end_split</element>
-            <position>12</position>
+            <position>11</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-07-13 15:29:50</sys_created_on>
-            <sys_id>7b122550c37a6a1087613342b401319e</sys_id>
+            <sys_created_on>2025-07-22 17:09:37</sys_created_on>
+            <sys_id>d54fc813c3b66a5087613342b40131c9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1784056_sixscape_device" sys_domain="global" view="Default view">7fd85113c3e2261087613342b40131bf</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-07-13 15:29:50</sys_updated_on>
+            <sys_updated_on>2025-07-22 17:09:37</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>

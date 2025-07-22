@@ -49,7 +49,7 @@
         <price_if_checked>0</price_if_checked>
         <pricing_implications>false</pricing_implications>
         <published_ref/>
-        <question_text>Application</question_text>
+        <question_text>Application/Device</question_text>
         <read_only>false</read_only>
         <read_roles/>
         <read_script/>
@@ -79,14 +79,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-21 05:54:34</sys_created_on>
         <sys_id>03baac36c37ea65087613342b401315e</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_name>Application</sys_name>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Application/Device</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy/>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>item_option_new_03baac36c37ea65087613342b401315e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-21 07:46:46</sys_updated_on>
+        <sys_updated_on>2025-07-22 17:13:13</sys_updated_on>
         <table/>
         <tooltip/>
         <topic_block/>
