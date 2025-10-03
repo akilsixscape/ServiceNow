@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>update</directory>
+        <documentkey>77a0f9a0c332ea1087613342b40131e0</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="x_1784056_sixscape_device">
+    <x_1784056_sixscape_device action="INSERT_OR_UPDATE">
+        <certificate_creation_time/>
+        <certificate_name/>
+        <certificate_status/>
+        <device_id>Add New Application</device_id>
+        <device_name>Add New Application</device_name>
+        <device_owner_id>Add New Application</device_owner_id>
+        <device_status/>
+        <expiry_date/>
+        <profile/>
+        <serial_number/>
+        <sys_class_name/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-14 11:12:15</sys_created_on>
+        <sys_id>77a0f9a0c332ea1087613342b40131e0</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-21 07:53:21</sys_updated_on>
+    </x_1784056_sixscape_device>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-09-19 13:50:27</sys_created_on>
+        <sys_id>0377d3cac340b69087613342b401311c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Add New Application</sys_name>
+        <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
+        <sys_update_name>sys_metadata_link_0377d3cac340b69087613342b401311c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-09-19 13:50:27</sys_updated_on>
+        <tablename>x_1784056_sixscape_device</tablename>
+    </sys_metadata_link>
+</record_update>
