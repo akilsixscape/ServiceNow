@@ -9,7 +9,8 @@
         <mobile_callable>false</mobile_callable>
         <name>ScheduleForProfileSync</name>
         <sandbox_callable>false</sandbox_callable>
-        <script><![CDATA[var ScheduleForProfileSync = Class.create();
+        <script><![CDATA[// This script is to sync the profile details from the IDCentral platform to ServiceNow
+var ScheduleForProfileSync = Class.create();
 ScheduleForProfileSync.prototype = {
     /**
      * Main method to trigger profile synchronization.
@@ -347,13 +348,13 @@ ScheduleForProfileSync.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-07-10 10:47:13</sys_created_on>
         <sys_id>fc740d9fc322261087613342b4013108</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>ScheduleForProfileSync</sys_name>
         <sys_package display_value="Sixscape IDcentral" source="x_1784056_sixscape">42bb04c3c3a6a21087613342b40131c0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Sixscape IDcentral">42bb04c3c3a6a21087613342b40131c0</sys_scope>
         <sys_update_name>sys_script_include_fc740d9fc322261087613342b4013108</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-17 10:50:31</sys_updated_on>
+        <sys_updated_on>2026-01-29 02:10:17</sys_updated_on>
     </sys_script_include>
 </record_update>
